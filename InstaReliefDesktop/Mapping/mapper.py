@@ -60,7 +60,7 @@ class Mapper(object):
             marker = '&markers=color:'+self.color_type[type]+'%7Clabel:S%7C' + str(lat) + ',' + str(lng)
             markers_list.append(marker)
 
-        urlparams = 'center='+str(self.lat)+','+str(self.lng)+'&size='+str(self.width)+'x'+str(self.height)+'&zoom='+str(self.zoom)+'&sensor=false'
+        urlparams = 'center='+str(self.lat)+','+str(self.lng)+'&size='+str(self.width)+'x'+str(self.height)+'&sensor=false'+'&maptype=hybrid'
         url = 'http://maps.googleapis.com/maps/api/staticmap?' + urlparams
         for marker in markers_list:
             url += marker
