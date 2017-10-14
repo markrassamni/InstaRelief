@@ -190,8 +190,7 @@ class Mapping_Ui(QtWidgets.QMainWindow):
         return g.ravel()
 
     def transparent_cmap(self, cmap, N=255):
-        "Copy colormap and set alpha values"
-        #
+
         mycmap = cmap
         mycmap._init()
         mycmap._lut[:,-1] = np.linspace(0, 0.8, N+4)

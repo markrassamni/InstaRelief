@@ -20,7 +20,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.interactlayout = QtWidgets.QHBoxLayout()
         self.interactlayout.setObjectName("interactlayout")
-        #
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.firefighter_button = QtWidgets.QPushButton(self.centralwidget)
