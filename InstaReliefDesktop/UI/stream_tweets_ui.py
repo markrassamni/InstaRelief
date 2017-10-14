@@ -40,13 +40,16 @@ class Form(QWidget):
         self.logOutput.append(name+" tweeted: " + text + " at: " + time)
         sb = self.logOutput.verticalScrollBar()
         sb.setValue(sb.maximum())
+
     def add_basic_tweet(self, text):
         self.logOutput.moveCursor(QTextCursor.End)
         text = str(text)
         self.logOutput.append(text)
         sb = self.logOutput.verticalScrollBar()
+        b = self.logOutput.horizontalScrollBar()
         sb.setValue(sb.maximum())
-        time.sleep(5)
+        b.setValue(b.minimum())
+        time.sleep(.1)
 
 
     def pullTweetsFromBase(self):
