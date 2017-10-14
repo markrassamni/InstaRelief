@@ -106,6 +106,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
         cityTxt.delegate = self
         stateTxt.delegate = self
         countryTxt.delegate = self
+        crossStreetsTxt.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -155,14 +156,32 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                 if (messageComposer.canSendText()) {
                     // Obtain a configured MFMessageComposeViewController
         //            let messageComposeVC = messageComposer.configuredMessageComposeViewController()
+                    
+//                    guard let streets = crossStreetsTxt.text else { let streets = "" }
+//                    guard let city = cityTxt.text else { let city = "" }
+//                    guard let state = stateTxt.text else { let state = "" }
+//                    guard let country = countryTxt.text else { let country = "" }
+                    if let streets = crossStreetsTxt.text {
+                        if let city = cityTxt.text {
+                            if let state = stateTxt.text {
+                                if let country = countryTxt.text {
+                                    if let danger = dangerTxt.text {
+                                        let text = "\(streets)//\(city)//\(state)//\(country)//\(danger)"
+                                        let messageComposeVC = messageComposer.configureTextMessage(text: text)
+                                        present(messageComposeVC, animated: true, completion: nil)
+                                    }
+                                }
+                            }
+                        }
+                    }
         
-                    let text = "\(crossStreetsTxt)\\\(cityTxt)\\\(stateTxt)\\\(countryTxt)\\\(dangerTxt)"
-                    let messageComposeVC = messageComposer.configureTextMessage(text: text)
+//                    let text = "\(crossStreetsTxt.text)\\\(cityTxt.text)\\\(stateTxt.text)\\\(countryTxt.text)\\\(dangerTxt.text)"
+//                    let messageComposeVC = messageComposer.configureTextMessage(text: text)
         
                     // Present the configured MFMessageComposeViewController instance
                     // Note that the dismissal of the VC will be handled by the messageComposer instance,
                     // since it implements the appropriate delegate call-back
-                    present(messageComposeVC, animated: true, completion: nil)
+//                    present(messageComposeVC, animated: true, completion: nil)
                 } else {
                     // Let the user know if his/her device isn't able to send text messages
                     let errorAlert = UIAlertController(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", preferredStyle: .alert)
