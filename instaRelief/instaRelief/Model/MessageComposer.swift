@@ -45,9 +45,10 @@ class MessageComposer: NSObject, MFMessageComposeViewControllerDelegate {
     
     // MFMessageComposeViewControllerDelegate callback - dismisses the view controller when the user is finished with it
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        if result == .sent {
-            offlineVC?.sentSuccessfully()
-        }
-        controller.dismiss(animated: true, completion: nil)
+        controller.dismiss(animated: true, completion: {
+            if result == .sent {
+                self.offlineVC?.sentSuccessfully()
+            }
+        })
     }
 }

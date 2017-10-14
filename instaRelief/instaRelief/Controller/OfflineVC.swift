@@ -111,7 +111,6 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
         peopleInGroup = Int(sender.value)
         groupSizeLbl.text = "People in group: \(peopleInGroup)"
-//        view.endEditing(true)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -123,22 +122,25 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     
     
     func sentSuccessfully(){
-        print("CAlled")
-        // called when hitting cancel
-//        UIViewPropertyAnimator(duration: 1.0, curve: .easeIn, animations: {
-//            self.messageSentImageView.alpha = 0.0
-//        }).startAnimation()
-        
-//        let when = DispatchTime.now() + 0.5
-//        DispatchQueue.main.asyncAfter(deadline: when) {
-//            UIViewPropertyAnimator(duration: 0.5, curve: .easeIn, animations: {
-//                self.messageSentImageView.alpha = 0.0
-//            }).startAnimation()
-//        }
+        addressText.text = ""
+        cityTxt.text = ""
+        stateTxt.text = ""
+        countryTxt.text = ""
+        dangerTxt.text = ""
+        zipTxt.text = ""
+        peopleInGroup = 1
+        groupSizeLbl.text = "People in group: \(peopleInGroup)"
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "SuccessVC")
+        controller.modalPresentationStyle = .overCurrentContext
+        self.present(controller, animated: true, completion: nil)
+        let when = DispatchTime.now() + 1
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            controller.dismiss(animated: true, completion: nil)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("Should return")
         textField.resignFirstResponder()
         return true
     }

@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "message_sent.png",
+      "filename" : "sentMessage.png",
       "scale" : "1x"
     },
     {
