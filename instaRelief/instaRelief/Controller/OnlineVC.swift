@@ -26,12 +26,13 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     @IBOutlet weak var successImage: UIImageView!
     @IBOutlet weak var dangerImageView: UIImageView!
     @IBOutlet weak var imageSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var timeUpdatedLbl: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         ref = Database.database().reference()
         dangerPicker.delegate = self
@@ -128,26 +129,39 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     
     func requestReport(){
         if let city = currentCity {
+            print(city)
             let cityRef = ref.child("Images")
             cityRef.observeSingleEvent(of: .value, with: { snapshot in
-                print(snapshot.childrenCount) // I got the expected number of items
                 let enumerator = snapshot.children
                 while let rest = enumerator.nextObject() as? DataSnapshot {
+                    print(rest.key)
                     if rest.key == city{
                         let urlRef = cityRef.child(rest.key)
                         urlRef.observeSingleEvent(of: .value, with: { snapshot in
-                            print(snapshot.childrenCount)
                             let urlEnum = snapshot.children
                             while let restURL = urlEnum.nextObject() as? DataSnapshot {
+                                print(restURL.key)
                                 if restURL.key == "url" {
                                     if let url = restURL.value as? String{
                                         if let urlAsString = URL(string: url){
                                             self.downloadImage(url: urlAsString)
                                         }
                                     }
+                                } else if restURL.key == "updateTime" {
+                                    if let time = restURL.value as? String {
+                                        self.timeUpdatedLbl.text = "Updated: \(time)"
+                                        self.timeUpdatedLbl.isHidden = false
+                                    }
                                 }
                             }
                         })
+                    } else {
+                        let errorAlert = UIAlertController(title: "No Danger Available", message: "Could not find any danger in \(city)", preferredStyle: .alert)
+                        let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .cancel) { action -> Void in
+                            errorAlert.dismiss(animated: true, completion: nil)
+                        }
+                        errorAlert.addAction(cancelAction)
+                        self.present(errorAlert, animated: true, completion: nil)
                     }
                 }
             })
@@ -186,6 +200,8 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
         dangerImageView.isHidden = true
         reportButton.isHidden = false
         requestButton.isHidden = false
+        timeUpdatedLbl.isHidden = true
+        dangerView.isHidden = true
     }
     
     
@@ -195,7 +211,6 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
             completion(data, response, error)
             }.resume()
     }
-    
     
     @IBAction func reportPressed(_ sender: Any) {
         dangerView.isHidden = false
