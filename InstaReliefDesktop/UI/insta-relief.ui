@@ -50,6 +50,20 @@
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="generatemap_button">
+            <property name="text">
+             <string>Generate Map</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="uploadmap_button">
+            <property name="text">
+             <string>Upload Map</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="spacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>

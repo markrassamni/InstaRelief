@@ -34,6 +34,7 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
+gmaps = googlemaps.Client(key='AIzaSyBgFJr6eJK7QgPRMX205_Cv2QsCiKZZUnI')
 
 class Mapper(object):
     """
@@ -50,6 +51,14 @@ class Mapper(object):
         self.all_lat, self.all_lng = [], []
         self.color_type = {'Zombie': 'green', 'Water': 'blue', 'Fire': 'red',
                            'Tornado': 'brown'}
+        self.icons_urls = {'Hurricane': 'https://i.imgur.com/MUuvsda.png',
+                             'Tornado': 'https://i.imgur.com/ldMGMJ5.png',
+                             'Zombie': 'https://i.imgur.com/ik4lwY8.png',
+                             'Fire': 'https://i.imgur.com/e7ulcpU.png',
+                             'Flood': 'https://i.imgur.com/9N9Glen.png'}
+
+        self.icons = []
+        self.city = None
 
     def geocode(self, addresses, cities):
         state = 'CA'
@@ -67,21 +76,34 @@ class Mapper(object):
         for user in all_users.each():
             val = user.val()
             for key in val:
-                lat = user[key]['latitude']
-                print (lat)
+                lat = user.val()[key]['latitude']
+                lng = user.val()[key]['longitude']
+                danger = user.val()[key]['danger']
+                self.all_lng.append(lng)
+                self.all_lat.append(lat)
+                self.icons.append(danger)
+
 
     def download_image(self, types):
         self.get_user_data()
         markers_list = []
-        for i in range(len(self.all_lng)):
+        for i in range(len(self.icons)):
             lng = self.all_lng[i]
             lat = self.all_lat[i]
-            type = types[i]
-            marker = '&markers=icon:https://i.imgur.com/VdRg39X.png'+'%7Clabel:S%7C' + str(lat) + ',' + str(lng)
+            danger = self.icons[i]
+            icon_url = self.icons_urls[danger]
+            marker = '&markers=icon:'+icon_url+'%7Clabel:S%7C' + str(lat) + ',' + str(lng)
             markers_list.append(marker)
 
+        mean_lng = np.mean(np.array(self.all_lng))
+        mean_lat = np.mean(np.array(self.all_lat))
+        latlng = {}
+        latlng['lat'] = lat
+        latlng['lng'] = lng
 
-        urlparams = 'center='+str(self.lat)+','+str(self.lng)+'&size='+str(self.width)+'x'+str(self.height)+'&sensor=false'+'&maptype=hybrid'
+        destination = gmaps.reverse_geocode(latlng)
+        self.city = destination[0]['address_components'][3]['long_name']
+        urlparams = '&size='+str(self.width)+'x'+str(self.height)+'&sensor=false'+'&maptype=street'
         url = 'http://maps.googleapis.com/maps/api/staticmap?' + urlparams
         for marker in markers_list:
             url += marker

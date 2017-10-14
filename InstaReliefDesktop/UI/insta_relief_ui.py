@@ -34,6 +34,12 @@ class Ui_MainWindow(object):
         self.loadplaces_button = QtWidgets.QPushButton(self.centralwidget)
         self.loadplaces_button.setObjectName("loadplaces_button")
         self.verticalLayout_8.addWidget(self.loadplaces_button)
+        self.generatemap_button = QtWidgets.QPushButton(self.centralwidget)
+        self.generatemap_button.setObjectName("generatemap_button")
+        self.verticalLayout_8.addWidget(self.generatemap_button)
+        self.uploadmap_button = QtWidgets.QPushButton(self.centralwidget)
+        self.uploadmap_button.setObjectName("uploadmap_button")
+        self.verticalLayout_8.addWidget(self.uploadmap_button)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_8.addItem(spacerItem)
         self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
@@ -65,6 +71,8 @@ class Ui_MainWindow(object):
         self.swat_button.setText(_translate("MainWindow", "Swat"))
         self.coastguard_button.setText(_translate("MainWindow", "Coast Guard"))
         self.loadplaces_button.setText(_translate("MainWindow", "Load Places"))
+        self.generatemap_button.setText(_translate("MainWindow", "Generate Map"))
+        self.uploadmap_button.setText(_translate("MainWindow", "Upload Map"))
 
 
 if __name__ == "__main__":
