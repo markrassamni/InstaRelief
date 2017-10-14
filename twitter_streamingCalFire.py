@@ -47,7 +47,7 @@ class StdOutListener(StreamListener):
         self.api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 
         self.upload_latest_tweets("SanDiegoPD", 10)
-        self.upload_latest_tweets("CALFIRES", 10)
+        self.upload_latest_tweets("CAL_FIRE", 10)
 
         print("listening: ")
         self.stream.filter(follow=user_twitter_id, track=keywords)  # 876731042 is kelly
@@ -125,6 +125,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     time.sleep(1.0)
-    listen = StdOutListener(['876731042'], ['#NGDemo', '#NorCalFires', '#SantaRosaFire', '#HurricaneOphelia'])
+    listen = StdOutListener(['21249970', '74752708'], ['#NGZombieApocolypse', '#NorCalFire'])
+    #Taking input from SanDiegoPD, CALFIRES, and '#NGZombieApocolypse'
 
     sys.exit(app.exec_())
