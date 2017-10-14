@@ -111,7 +111,11 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                 } else {
                     // Let the user know if his/her device isn't able to send text messages
                     let errorAlert = UIAlertController(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", preferredStyle: .alert)
-                    errorAlert.show(self, sender: nil)
+                    let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+                        errorAlert.dismiss(animated: true, completion: nil)
+                    }
+                    errorAlert.addAction(cancelAction)
+                    self.present(errorAlert, animated: true, completion: nil)
                 }
     }
     
@@ -189,7 +193,11 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                         self.activitySpinner.isHidden = true
                         self.connectOnlineBtn.isHidden = false
                         let errorAlert = UIAlertController(title: "No data connection", message: "Your device is not able to connect to the internet.", preferredStyle: .alert)
-                        errorAlert.show(self, sender: nil)
+                        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+                            errorAlert.dismiss(animated: true, completion: nil)
+                        }
+                        errorAlert.addAction(cancelAction)
+                        self.present(errorAlert, animated: true, completion: nil)
                     }
                 }
             }

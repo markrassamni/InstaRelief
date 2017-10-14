@@ -13,16 +13,11 @@ import GoogleMaps
 
 class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    
-    
-    
     let locationManager = CLLocationManager()
     var ref: DatabaseReference!
     var currentLocation: CLLocation?
     var currentCity: String?
     fileprivate var dangerToReport: String!
-    
-    
     
     @IBOutlet weak var reportButton: UIButton!
     @IBOutlet weak var requestButton: UIButton!
@@ -50,17 +45,12 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
         }
     }
     
-    
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last! as CLLocation
         let geoCoder = CLGeocoder()
         geoCoder.reverseGeocodeLocation(self.currentLocation!) { placemarks, error in
-            
             if let e = error {
-                
                 print("Error getting city: \(e)")
-                
             } else {
                 if let placeArray = placemarks as? [CLPlacemark] {
                     var placeMark: CLPlacemark!
@@ -75,13 +65,6 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
             }
             
         }
-        
-//        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        
-        
-//        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        
-//        self.map.setRegion(region, animated: true)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -133,28 +116,18 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
         }
         else {
             let errorAlert = UIAlertController(title: "Current Location Unavailable", message: "Your device is not able to send your current location. Try again or send as SMS", preferredStyle: .alert)
-            errorAlert.show(self, sender: nil)
+            let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .cancel) { action -> Void in
+                errorAlert.dismiss(animated: true, completion: nil)
+            }
+            errorAlert.addAction(cancelAction)
+            self.present(errorAlert, animated: true, completion: nil)
             self.locationManager.requestLocation()
         }
         
     }
     
     func requestReport(){
-        // send location and phone number
-//        let phoneRef = ref.child("texts")
         if let city = currentCity {
-//            phoneRef.observeSingleEvent(of: .value, with: { snapshot in
-//                print(snapshot.childrenCount) // I got the expected number of items
-//                let enumerator = snapshot.children
-//                while let rest = enumerator.nextObject() as? DataSnapshot {
-//                    print(rest.value)
-//                }
-//            })
-//            let link = "http://www.apple.com/euro/ios/ios8/a/generic/images/og.png"
-//            guard let url = URL(string: link) else { return }
-//            getDataFromUrl(url: url, completion: { (data: Data?, response: URLResponse?, error: Error?) in
-//
-//            })
             let cityRef = ref.child("Images")
             cityRef.observeSingleEvent(of: .value, with: { snapshot in
                 print(snapshot.childrenCount) // I got the expected number of items
@@ -176,19 +149,15 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
                             }
                         })
                     }
-//                    print(rest.key)
-//                    print(rest.value)
                 }
             })
-            
-//            if let url = URL(string: "http://www.apple.com/euro/ios/ios8/a/generic/images/og.png") {
-////                imageView.contentMode = .scaleAspectFit
-//                downloadImage(url: url)
-//            }
-            
         } else {
             let errorAlert = UIAlertController(title: "Current Location Unavailable", message: "Your device is not able to send your current location. Try again later.", preferredStyle: .alert)
-            errorAlert.show(self, sender: nil)
+            let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .cancel) { action -> Void in
+                errorAlert.dismiss(animated: true, completion: nil)
+            }
+            errorAlert.addAction(cancelAction)
+            self.present(errorAlert, animated: true, completion: nil)
             self.locationManager.requestLocation()
         }
     }
@@ -272,16 +241,5 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
         performSegue(withIdentifier: "OnlineToOffline", sender: nil)
     }
 
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
