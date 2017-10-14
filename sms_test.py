@@ -3,6 +3,8 @@ from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
 import pyrebase
 
+
+# test
 message_body = " "
 locations = ['location', 'safe place']
 number = None
