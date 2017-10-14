@@ -13,6 +13,7 @@
 		F96270791F91AF350043588F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F96270771F91AF350043588F /* Main.storyboard */; };
 		F962707E1F91AF350043588F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F962707C1F91AF350043588F /* LaunchScreen.storyboard */; };
 		F9C9FBAB1F91FB7800B8F653 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F91292611F91C35A00A0EEB5 /* Assets.xcassets */; };
+		F9C9FBAD1F9206D800B8F653 /* OnlineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C9FBAC1F9206D800B8F653 /* OnlineVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		F96270781F91AF350043588F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F962707D1F91AF350043588F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F962707F1F91AF350043588F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F9C9FBAC1F9206D800B8F653 /* OnlineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				F96270751F91AF350043588F /* OfflineVC.swift */,
+				F9C9FBAC1F9206D800B8F653 /* OnlineVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -124,6 +127,11 @@
 					F962706F1F91AF350043588F = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -166,6 +174,7 @@
 				F91292601F91B54800A0EEB5 /* MessageComposer.swift in Sources */,
 				F96270761F91AF350043588F /* OfflineVC.swift in Sources */,
 				F96270741F91AF350043588F /* AppDelegate.swift in Sources */,
+				F9C9FBAD1F9206D800B8F653 /* OnlineVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
