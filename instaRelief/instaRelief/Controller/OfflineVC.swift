@@ -185,10 +185,11 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                     if isInternetAvailable(){
                         self.performSegue(withIdentifier: "OfflineToOnline", sender: nil)
                     } else {
-                        // TODO alert
                         self.activitySpinner.stopAnimating()
                         self.activitySpinner.isHidden = true
                         self.connectOnlineBtn.isHidden = false
+                        let errorAlert = UIAlertController(title: "No data connection", message: "Your device is not able to connect to the internet.", preferredStyle: .alert)
+                        errorAlert.show(self, sender: nil)
                     }
                 }
             }

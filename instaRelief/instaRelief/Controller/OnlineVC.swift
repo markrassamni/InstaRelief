@@ -102,7 +102,8 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
             }
         }
         else {
-            // TODO: alert error no location available, try again later
+            let errorAlert = UIAlertController(title: "Current Location Unavailable", message: "Your device is not able to send your current location. Try again or send as SMS", preferredStyle: .alert)
+            errorAlert.show(self, sender: nil)
             self.locationManager.requestLocation()
         }
         
