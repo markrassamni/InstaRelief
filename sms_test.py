@@ -3,8 +3,10 @@ from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
 import pyrebase
 
+
+# test
 message_body = " "
-location = ['location', 'safe place']
+locations = ['location', 'safe place']
 number = None
 safe_location = None
 direction_image = None
@@ -46,16 +48,27 @@ def sms_reply():
     number, message_body = sms()
     resp = MessagingResponse()
     msg_breakdown = message_body.split("//")
-    data = {"address":  msg_breakdown[0], "city": msg_breakdown[1], "state": msg_breakdown[2], "zip": msg_breakdown[3], "country":  msg_breakdown[4], "numPeople":  msg_breakdown[5], "disaster":  msg_breakdown[6]}
-    db.child("texts").child(number).push(data)
-    safe_location = "Peterson, NY"
-    direction_image = "https://debonair-shame-6855.twil.io/assets/test%20image.jpg"
 
-    if "location" in message_body:
-        msg = resp.message("You can go to " + safe_location + " for safety!")
-        msg.media(direction_image)
+    # If text is from app, else from user seeking help
+    msg_size = len(msg_breakdown)
+    if msg_size == 7: # Check if user altered the message
+        data = {"address":  msg_breakdown[0], "city": msg_breakdown[1], "state": msg_breakdown[2], "zip": msg_breakdown[3], "country":  msg_breakdown[4], "numPeople":  msg_breakdown[5], "disaster":  msg_breakdown[6]}
+        db.child("texts").child(number).push(data)
+        resp.message("Thank you for sharing your information. Here is a map with details"
+                     " including dangers around you and where to find help! Please refer to our app"
+                     " for any other information needed! -InstaRelief")
     else:
-        resp.message("Zombies are coming, RUN!")
+        resp.message("We are sorry, we cannot process your information at this time. Please try"
+                     " resubmitting without altering the output text. -InstaRelief")
+
+        # safe_location = "Peterson, NY"
+        # direction_image = "https://debonair-shame-6855.twil.io/assets/test%20image.jpg"
+        #
+        # if any(i in message_body for i in locations):
+        #     msg = resp.message("You can go to " + safe_location + " for safety!")
+        #     msg.media(direction_image)
+        # else:
+        #     resp.message("Zombies are coming, RUN!")
 
     return str(resp)
 
