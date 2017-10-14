@@ -38,6 +38,7 @@ class StdOutListener(StreamListener):
         tweetCreatedAt = tweet['created_at']
         print(tweetText)
         return True
+    #gggggg
 
     def on_error(self, status):
         text_file.write(status)
