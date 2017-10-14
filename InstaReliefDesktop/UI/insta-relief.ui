@@ -43,7 +43,11 @@
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinBox"/>
+           <widget class="QPushButton" name="loadplaces_button">
+            <property name="text">
+             <string>Load Places</string>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="spacer">

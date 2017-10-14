@@ -31,9 +31,9 @@ class Ui_MainWindow(object):
         self.coastguard_button = QtWidgets.QPushButton(self.centralwidget)
         self.coastguard_button.setObjectName("coastguard_button")
         self.verticalLayout_8.addWidget(self.coastguard_button)
-        self.spinBox = QtWidgets.QSpinBox(self.centralwidget)
-        self.spinBox.setObjectName("spinBox")
-        self.verticalLayout_8.addWidget(self.spinBox)
+        self.loadplaces_button = QtWidgets.QPushButton(self.centralwidget)
+        self.loadplaces_button.setObjectName("loadplaces_button")
+        self.verticalLayout_8.addWidget(self.loadplaces_button)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_8.addItem(spacerItem)
         self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
@@ -64,6 +64,7 @@ class Ui_MainWindow(object):
         self.firefighter_button.setText(_translate("MainWindow", "Fire Fighters"))
         self.swat_button.setText(_translate("MainWindow", "Swat"))
         self.coastguard_button.setText(_translate("MainWindow", "Coast Guard"))
+        self.loadplaces_button.setText(_translate("MainWindow", "Load Places"))
 
 
 if __name__ == "__main__":
