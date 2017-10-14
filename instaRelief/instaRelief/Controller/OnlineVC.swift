@@ -35,7 +35,6 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
         ref = Database.database().reference()
         dangerPicker.delegate = self
         dangerPicker.dataSource = self
-        print("IS AVAIL: \(isInternetAvailable())")
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -146,6 +145,11 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return "\(dangerSources[row])"
+    }
+    
+    
+    @IBAction func smsPressed(_ sender: Any) {
+        performSegue(withIdentifier: "OnlineToOffline", sender: nil)
     }
     
 

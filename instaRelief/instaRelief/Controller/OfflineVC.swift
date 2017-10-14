@@ -22,6 +22,9 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     @IBOutlet weak var groupSizeLbl: UILabel!
     @IBOutlet weak var groupStepper: UIStepper!
     @IBOutlet weak var groupStack: UIStackView!
+    @IBOutlet weak var connectOnlineBtn: UIButton!
+    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+    
     
     
     fileprivate var peopleInGroup = 1
@@ -39,6 +42,11 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
         stateTxt.delegate = self
         countryTxt.delegate = self
         addressText.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        activitySpinner.isHidden = true
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -142,6 +150,30 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
         textField.resignFirstResponder()
         return true
     }
+    
+    @IBAction func connectOnlinePressed(_ sender: Any) {
+        connectOnlineBtn.isHidden = true
+        activitySpinner.isHidden = false
+        activitySpinner.startAnimating()
+        let when = DispatchTime.now() + 0.5
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            if isInternetAvailable(){
+                self.performSegue(withIdentifier: "OfflineToOnline", sender: nil)
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: when + 2){
+                    if isInternetAvailable(){
+                        self.performSegue(withIdentifier: "OfflineToOnline", sender: nil)
+                    } else {
+                        // TODO alert
+                        self.activitySpinner.stopAnimating()
+                        self.activitySpinner.isHidden = true
+                        self.connectOnlineBtn.isHidden = false
+                    }
+                }
+            }
+        }
+    }
+    
     
     
 }
