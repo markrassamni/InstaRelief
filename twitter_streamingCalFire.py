@@ -59,7 +59,6 @@ class StdOutListener(StreamListener):
     def on_data(self, data):
         # write to text file
         print(data)
-        print(data)
         self.text_file.write(data)
         self.text_file.flush()
         self.numTweets += 1
