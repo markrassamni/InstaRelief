@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B01CF0E0C247DD9E51290A68 /* Pods_instaRelief.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD98AEF161C1A276188BDBF /* Pods_instaRelief.framework */; };
 		F91292601F91B54800A0EEB5 /* MessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F912925F1F91B54800A0EEB5 /* MessageComposer.swift */; };
 		F96270741F91AF350043588F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96270731F91AF350043588F /* AppDelegate.swift */; };
 		F96270761F91AF350043588F /* OfflineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96270751F91AF350043588F /* OfflineVC.swift */; };
@@ -17,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		520A56B8AAA61CE12F28AB78 /* Pods-instaRelief.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instaRelief.debug.xcconfig"; path = "Pods/Target Support Files/Pods-instaRelief/Pods-instaRelief.debug.xcconfig"; sourceTree = "<group>"; };
+		8BD98AEF161C1A276188BDBF /* Pods_instaRelief.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_instaRelief.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		96B4EC83C783BF9A4CEA7822 /* Pods-instaRelief.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instaRelief.release.xcconfig"; path = "Pods/Target Support Files/Pods-instaRelief/Pods-instaRelief.release.xcconfig"; sourceTree = "<group>"; };
 		F912925F1F91B54800A0EEB5 /* MessageComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposer.swift; sourceTree = "<group>"; };
 		F91292611F91C35A00A0EEB5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F96270701F91AF350043588F /* instaRelief.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = instaRelief.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -25,6 +29,7 @@
 		F96270781F91AF350043588F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F962707D1F91AF350043588F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F962707F1F91AF350043588F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F9BCA63C1F921B2A0005FAEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9C9FBAC1F9206D800B8F653 /* OnlineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -33,17 +38,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B01CF0E0C247DD9E51290A68 /* Pods_instaRelief.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14076C379E1417F499C99A67 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8BD98AEF161C1A276188BDBF /* Pods_instaRelief.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8CAC6F5CB7663F017FEA017D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				520A56B8AAA61CE12F28AB78 /* Pods-instaRelief.debug.xcconfig */,
+				96B4EC83C783BF9A4CEA7822 /* Pods-instaRelief.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		F96270671F91AF350043588F = {
 			isa = PBXGroup;
 			children = (
 				F96270721F91AF350043588F /* instaRelief */,
 				F96270711F91AF350043588F /* Products */,
+				8CAC6F5CB7663F017FEA017D /* Pods */,
+				14076C379E1417F499C99A67 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +91,7 @@
 				F96270771F91AF350043588F /* Main.storyboard */,
 				F962707C1F91AF350043588F /* LaunchScreen.storyboard */,
 				F962707F1F91AF350043588F /* Info.plist */,
+				F9BCA63C1F921B2A0005FAEC /* GoogleService-Info.plist */,
 			);
 			path = instaRelief;
 			sourceTree = "<group>";
@@ -101,9 +127,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F96270821F91AF350043588F /* Build configuration list for PBXNativeTarget "instaRelief" */;
 			buildPhases = (
+				5FA4CEBBAED843333C794B72 /* [CP] Check Pods Manifest.lock */,
 				F962706C1F91AF350043588F /* Sources */,
 				F962706D1F91AF350043588F /* Frameworks */,
 				F962706E1F91AF350043588F /* Resources */,
+				1CEEBC4FD2D1C4D7CB15F88D /* [CP] Embed Pods Frameworks */,
+				C2A30BEF1DAD077D1BC484BD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -165,6 +194,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1CEEBC4FD2D1C4D7CB15F88D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-instaRelief/Pods-instaRelief-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5FA4CEBBAED843333C794B72 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C2A30BEF1DAD077D1BC484BD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-instaRelief/Pods-instaRelief-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F962706C1F91AF350043588F /* Sources */ = {
@@ -309,6 +386,7 @@
 		};
 		F96270831F91AF350043588F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 520A56B8AAA61CE12F28AB78 /* Pods-instaRelief.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -326,6 +404,7 @@
 		};
 		F96270841F91AF350043588F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96B4EC83C783BF9A4CEA7822 /* Pods-instaRelief.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

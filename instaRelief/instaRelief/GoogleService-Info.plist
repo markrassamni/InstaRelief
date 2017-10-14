@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>735702272631-fctocg3lmu4fdegs48o0bv4miv9n1unf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.735702272631-fctocg3lmu4fdegs48o0bv4miv9n1unf</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDzTn2WYhgqBTHHBQCYcegjRRHaWn436ww</string>
+	<key>GCM_SENDER_ID</key>
+	<string>735702272631</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.markrassamni.instaRelief</string>
+	<key>PROJECT_ID</key>
+	<string>ngcode-9f40c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ngcode-9f40c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:735702272631:ios:1867575412b2b603</string>
+	<key>DATABASE_URL</key>
+	<string>https://ngcode-9f40c.firebaseio.com</string>
+</dict>
+</plist>

@@ -177,20 +177,48 @@
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
         </scene>
-        <!--View Controller-->
+        <!--OnlineVC-->
         <scene sceneID="xSz-fN-ve6">
             <objects>
-                <viewController id="0ng-Qb-ko7" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OnlineVC" id="0ng-Qb-ko7" customClass="OnlineVC" customModule="instaRelief" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ocX-y3-4pW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fVg-D5-Ufr">
+                                <rect key="frame" x="60.5" y="251.5" width="254" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="254" id="VIj-L1-PRV"/>
+                                    <constraint firstAttribute="height" constant="64" id="ZdH-go-QLT"/>
+                                </constraints>
+                                <state key="normal" title="Report Danger"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmv-dc-mZL">
+                                <rect key="frame" x="60" y="351.5" width="254" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="254" id="1lB-Ti-QE5"/>
+                                    <constraint firstAttribute="height" constant="64" id="KLu-KS-P7q"/>
+                                </constraints>
+                                <state key="normal" title="Request Nearby Danger"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fVg-D5-Ufr" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" constant="-50" id="aaG-KC-Wz8"/>
+                            <constraint firstItem="fVg-D5-Ufr" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="mhq-4N-2kb"/>
+                            <constraint firstItem="tmv-dc-mZL" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="n7D-wu-LuY"/>
+                            <constraint firstItem="tmv-dc-mZL" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" constant="50" id="xq7-rM-NR8"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="u5x-b6-PgP"/>
                     </view>
+                    <connections>
+                        <outlet property="reportButton" destination="fVg-D5-Ufr" id="cGc-8l-YpF"/>
+                        <outlet property="requestButton" destination="tmv-dc-mZL" id="wYM-qf-zHu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAn-LK-I9J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="842" y="34"/>
+            <point key="canvasLocation" x="992.79999999999995" y="33.733133433283363"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Wig-lq-yth">
