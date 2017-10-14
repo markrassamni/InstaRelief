@@ -59,9 +59,13 @@ def sms_reply():
                      " for any other information needed! -InstaRelief")
 
         for cities in db.child('Images').get().each():
-                for url in cities.val():
-                    if url == 'url':
-                        img = cities.val()['url']
+                print(cities.key())
+                print(msg_breakdown[1])
+                if msg_breakdown[1].lower() == (cities.key()).lower():
+                    for url in cities.val():
+                        if url == 'url':
+                            img = cities.val()['url']
+        print(img)
         msg.media(img)
     else:
         resp.message("We are sorry, we cannot process your information at this time. Please try"
