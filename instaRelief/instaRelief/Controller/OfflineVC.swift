@@ -26,8 +26,6 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     
     fileprivate var peopleInGroup = 1
     
-    
-    fileprivate var pickerDataSource = ["Fire", "Flood", "Zombie", "Hurricane", "Tornado"];
     fileprivate let messageComposer = MessageComposer()
     
     override func viewDidLoad() {
@@ -59,16 +57,16 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerDataSource.count
+        return dangerSources.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        return pickerDataSource[row]
+        return dangerSources[row]
     }
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        dangerTxt.text = "\(pickerDataSource[row])"
+        dangerTxt.text = "\(dangerSources[row])"
     }
     
     @IBAction func selectPickerItem(_ sender: Any) {
@@ -79,7 +77,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "\(pickerDataSource[row])"
+        return "\(dangerSources[row])"
     }
     
     @IBAction func sendPressed(_ sender: Any) {

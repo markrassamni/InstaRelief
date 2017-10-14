@@ -10,19 +10,22 @@ import UIKit
 import CoreLocation
 import Firebase
 
-class OnlineVC: UIViewController, CLLocationManagerDelegate {
+class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     
     
     let locationManager = CLLocationManager()
-    let GOOGLE_API_KEY = "AIzaSyButIsDYJy_Xau-VmvewsvH4e7H78KJF0s"
     var ref: DatabaseReference!
     var currentLocation: CLLocation?
+    fileprivate var dangerToReport: String!
+    
     
     
     @IBOutlet weak var reportButton: UIButton!
     @IBOutlet weak var requestButton: UIButton!
+    @IBOutlet weak var dangerView: UIView!
+    @IBOutlet weak var dangerPicker: UIPickerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +33,8 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.requestAlwaysAuthorization()
         ref = Database.database().reference()
+        dangerPicker.delegate = self
+        dangerPicker.dataSource = self
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -38,32 +43,7 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error)->Void in
-//
-//            if (error != nil) {
-//                print("Error: " + error!.localizedDescription)
-//                return
-//            }
-//
-//            if placemarks!.count > 0 {
-//                let pm = placemarks![0] as CLPlacemark
-//                self.displayLocationInfo(placemark: pm)
-//            } else {
-//                print("Error with the data.")
-//            }
-//        })
-//    }
-//
-//    func displayLocationInfo(placemark: CLPlacemark) {
-//
-//        self.locationManager.stopUpdatingLocation()
-//        print(placemark.locality)
-//        print(placemark.postalCode)
-//        print(placemark.administrativeArea)
-//        print(placemark.country)
-//
-//    }
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        let location = locations.last! as CLLocation
@@ -83,6 +63,8 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate {
     
     func reportDanger(danger: String){
         if let location = currentLocation {
+            print(location.coordinate.latitude)
+            print(location.coordinate.longitude)
             let uuid = UIDevice.current.identifierForVendor!.uuidString
             let date = Date()
             let calendar = Calendar.current
@@ -92,9 +74,29 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate {
             let minutes = calendar.component(.minute, from: date)
             let seconds = calendar.component(.second, from: date)
             let dateChild = "\(month) \(day) \(hour):\(minutes):\(seconds)"
-            self.ref.child("appUsers").child(uuid).child(dateChild).setValue(["latitude": location.coordinate.latitude])
-            self.ref.child("appUsers").child(uuid).child(dateChild).setValue(["longitude": location.coordinate.longitude])
-            self.ref.child("appUsers").child(uuid).child(dateChild).setValue(["danger": danger])
+            self.ref.child("appUsers").child(uuid).child(dateChild).child("latitude").setValue(location.coordinate.latitude) { (error, ref) -> Void in
+                if error == nil {
+                     self.ref.child("appUsers").child(uuid).child(dateChild).child("longitude").setValue(location.coordinate.longitude) { (error, ref) -> Void in
+                        if error == nil {
+                            self.ref.child("appUsers").child(uuid).child(dateChild).child("danger").setValue(danger) { (error, ref) -> Void in
+                                if error == nil {
+                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                    let controller = storyboard.instantiateViewController(withIdentifier: "SuccessVC")
+                                    controller.modalPresentationStyle = .overCurrentContext
+                                    self.present(controller, animated: true, completion: nil)
+                                    let when = DispatchTime.now() + 1
+                                    DispatchQueue.main.asyncAfter(deadline: when) {
+                                        controller.dismiss(animated: true, completion: nil)
+                                        self.reportButton.isHidden = false
+                                        self.requestButton.isHidden = false
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
         }
         else {
             // TODO: alert error no location available, try again later
@@ -106,7 +108,47 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate {
     func requestReport(){
         // send location and phone number
     }
-
+    
+    
+    @IBAction func reportPressed(_ sender: Any) {
+        dangerView.isHidden = false
+        reportButton.isHidden = true
+        requestButton.isHidden = true
+    }
+    
+    @IBAction func requestPressed(_ sender: Any) {
+        
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return dangerSources.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        return dangerSources[row]
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        dangerToReport = dangerSources[row]
+    }
+    
+    @IBAction func selectPickerItem(_ sender: Any) {
+        dangerView.isHidden = true
+        if let danger = dangerToReport {
+            reportDanger(danger: danger)
+        }
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "\(dangerSources[row])"
+    }
+    
 
 
     

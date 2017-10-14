@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0ng-Qb-ko7">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -191,7 +191,10 @@
                                     <constraint firstAttribute="width" constant="254" id="VIj-L1-PRV"/>
                                     <constraint firstAttribute="height" constant="64" id="ZdH-go-QLT"/>
                                 </constraints>
-                                <state key="normal" title="Report Danger"/>
+                                <state key="normal" title="Report Danger at Current Location"/>
+                                <connections>
+                                    <action selector="reportPressed:" destination="0ng-Qb-ko7" eventType="touchUpInside" id="tpv-us-7J6"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmv-dc-mZL">
                                 <rect key="frame" x="60" y="351.5" width="254" height="64"/>
@@ -200,18 +203,50 @@
                                     <constraint firstAttribute="height" constant="64" id="KLu-KS-P7q"/>
                                 </constraints>
                                 <state key="normal" title="Request Nearby Danger"/>
+                                <connections>
+                                    <action selector="requestPressed:" destination="0ng-Qb-ko7" eventType="touchUpInside" id="4Mj-2d-7AD"/>
+                                </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ikv-0t-cMX" userLabel="DangerView">
+                                <rect key="frame" x="27.5" y="233" width="320" height="200"/>
+                                <subviews>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mNJ-xT-HAY">
+                                        <rect key="frame" x="0.0" y="15" width="320" height="185"/>
+                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9g-j6-fui">
+                                        <rect key="frame" x="266" y="5" width="49" height="30"/>
+                                        <state key="normal" title="Submit"/>
+                                        <connections>
+                                            <action selector="selectPickerItem:" destination="0ng-Qb-ko7" eventType="touchUpInside" id="OZK-40-Kid"/>
+                                            <action selector="selectPickerItem:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kgd-QP-QBi"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="6j7-rF-gWm"/>
+                                    <constraint firstAttribute="trailing" secondItem="mNJ-xT-HAY" secondAttribute="trailing" id="hpa-K3-MZh"/>
+                                    <constraint firstItem="mNJ-xT-HAY" firstAttribute="leading" secondItem="ikv-0t-cMX" secondAttribute="leading" id="mHt-X0-2BF"/>
+                                    <constraint firstAttribute="bottom" secondItem="mNJ-xT-HAY" secondAttribute="bottom" id="oGl-h4-e8K"/>
+                                    <constraint firstItem="mNJ-xT-HAY" firstAttribute="top" secondItem="ikv-0t-cMX" secondAttribute="top" constant="15" id="puA-3f-HOu"/>
+                                    <constraint firstItem="J9g-j6-fui" firstAttribute="top" secondItem="ikv-0t-cMX" secondAttribute="top" constant="5" id="sKW-oT-HRU"/>
+                                    <constraint firstAttribute="trailing" secondItem="J9g-j6-fui" secondAttribute="trailing" constant="5" id="uBO-K0-dNn"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="ikv-0t-cMX" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="JNK-Zl-WlZ"/>
                             <constraint firstItem="fVg-D5-Ufr" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" constant="-50" id="aaG-KC-Wz8"/>
                             <constraint firstItem="fVg-D5-Ufr" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="mhq-4N-2kb"/>
                             <constraint firstItem="tmv-dc-mZL" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="n7D-wu-LuY"/>
+                            <constraint firstItem="ikv-0t-cMX" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" id="vVq-vH-8oO"/>
                             <constraint firstItem="tmv-dc-mZL" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" constant="50" id="xq7-rM-NR8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="u5x-b6-PgP"/>
                     </view>
                     <connections>
+                        <outlet property="dangerPicker" destination="mNJ-xT-HAY" id="5xl-Vv-m7h"/>
+                        <outlet property="dangerView" destination="ikv-0t-cMX" id="wnV-oP-ehW"/>
                         <outlet property="reportButton" destination="fVg-D5-Ufr" id="cGc-8l-YpF"/>
                         <outlet property="requestButton" destination="tmv-dc-mZL" id="wYM-qf-zHu"/>
                     </connections>

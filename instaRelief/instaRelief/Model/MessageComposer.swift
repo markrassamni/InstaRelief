@@ -9,7 +9,6 @@
 import Foundation
 import MessageUI
 
-let textMessageRecipients = ["1-619-304-5612"] 
 
 class MessageComposer: NSObject, MFMessageComposeViewControllerDelegate {
     
