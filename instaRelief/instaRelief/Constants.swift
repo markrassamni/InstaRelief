@@ -8,4 +8,4 @@
 
 let textMessageRecipients = ["1-619-304-5612"]
 let dangerSources = ["Fire", "Flood", "Zombie", "Hurricane", "Tornado"];
-let GOOGLE__MAPS_API_KEY = "AIzaSyButIsDYJy_Xau-VmvewsvH4e7H78KJF0s"
+let GOOGLE_MAPS_API_KEY = "AIzaSyButIsDYJy_Xau-VmvewsvH4e7H78KJF0s"

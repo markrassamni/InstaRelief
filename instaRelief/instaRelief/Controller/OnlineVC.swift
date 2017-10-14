@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import Firebase
+import GoogleMaps
 
 class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -18,6 +19,7 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     let locationManager = CLLocationManager()
     var ref: DatabaseReference!
     var currentLocation: CLLocation?
+    var currentCity: String?
     fileprivate var dangerToReport: String!
     
     
@@ -47,8 +49,28 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        let location = locations.last! as CLLocation
         currentLocation = locations.last! as CLLocation
+        let geoCoder = CLGeocoder()
+        geoCoder.reverseGeocodeLocation(self.currentLocation!) { placemarks, error in
+            
+            if let e = error {
+                
+                print("Error getting city: \(e)")
+                
+            } else {
+                if let placeArray = placemarks as? [CLPlacemark] {
+                    var placeMark: CLPlacemark!
+                    placeMark = placeArray[0]
+                    guard let address = placeMark.addressDictionary as? [String:Any] else {
+                        return
+                    }
+                    if let city = address["City"] as? String{
+                        self.currentCity = city
+                    }
+                }
+            }
+            
+        }
         
 //        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         
@@ -63,7 +85,7 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     }
     
     func reportDanger(danger: String){
-        if let location = currentLocation {
+        if let location = currentLocation, let city = currentCity {
             let uuid = UIDevice.current.identifierForVendor!.uuidString
             let date = Date()
             let calendar = Calendar.current
@@ -73,25 +95,30 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
             let minutes = calendar.component(.minute, from: date)
             let seconds = calendar.component(.second, from: date)
             let dateChild = "\(month) \(day) \(hour):\(minutes):\(seconds)"
-            self.ref.child("appUsers").child(uuid).child(dateChild).child("latitude").setValue(location.coordinate.latitude) { (error, ref) -> Void in
+            print("CURRENT CITY: \(city)")
+            self.ref.child("appUsers").child(uuid).child(dateChild).child("city").setValue(city) { (error, ref) -> Void in
                 if error == nil {
-                     self.ref.child("appUsers").child(uuid).child(dateChild).child("longitude").setValue(location.coordinate.longitude) { (error, ref) -> Void in
+                    self.ref.child("appUsers").child(uuid).child(dateChild).child("latitude").setValue(location.coordinate.latitude) { (error, ref) -> Void in
                         if error == nil {
-                            self.ref.child("appUsers").child(uuid).child(dateChild).child("danger").setValue(danger) { (error, ref) -> Void in
+                            self.ref.child("appUsers").child(uuid).child(dateChild).child("longitude").setValue(location.coordinate.longitude) { (error, ref) -> Void in
                                 if error == nil {
-                                    self.successImage.alpha = 0.0
-                                    UIViewPropertyAnimator(duration: 0.7, curve: .easeOut, animations: {
-                                        self.successImage.isHidden = false
-                                        self.successImage.alpha = 1.0
-                                    }).startAnimation()
-                                    let when = DispatchTime.now() + 0.7
-                                    DispatchQueue.main.asyncAfter(deadline: when) {
-                                        UIViewPropertyAnimator(duration: 0.7, curve: .easeOut, animations: {
+                                    self.ref.child("appUsers").child(uuid).child(dateChild).child("danger").setValue(danger) { (error, ref) -> Void in
+                                        if error == nil {
                                             self.successImage.alpha = 0.0
-                                        }).startAnimation()
-                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.7){
-                                            self.reportButton.isHidden = false
-                                            self.requestButton.isHidden = false
+                                            UIViewPropertyAnimator(duration: 0.7, curve: .easeOut, animations: {
+                                                self.successImage.isHidden = false
+                                                self.successImage.alpha = 1.0
+                                            }).startAnimation()
+                                            let when = DispatchTime.now() + 0.7
+                                            DispatchQueue.main.asyncAfter(deadline: when) {
+                                                UIViewPropertyAnimator(duration: 0.7, curve: .easeOut, animations: {
+                                                    self.successImage.alpha = 0.0
+                                                }).startAnimation()
+                                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.7){
+                                                    self.reportButton.isHidden = false
+                                                    self.requestButton.isHidden = false
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -111,6 +138,13 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     
     func requestReport(){
         // send location and phone number
+        if let location = currentLocation {
+            
+        } else {
+            let errorAlert = UIAlertController(title: "Current Location Unavailable", message: "Your device is not able to send your current location. Try again later.", preferredStyle: .alert)
+            errorAlert.show(self, sender: nil)
+            self.locationManager.requestLocation()
+        }
     }
     
     
