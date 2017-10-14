@@ -18,7 +18,6 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     @IBOutlet weak var dangerTxt: UITextField!
     @IBOutlet weak var dangerView: UIView!
     @IBOutlet weak var dangerPicker: UIPickerView!
-    @IBOutlet weak var messageSentImageView: UIImageView!
     @IBOutlet weak var zipTxt: UITextField!
     @IBOutlet weak var groupSizeLbl: UILabel!
     @IBOutlet weak var groupStepper: UIStepper!
@@ -95,7 +94,6 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                                         if let zip = zipTxt.text {
                                             let text = "\(streets)//\(city)//\(state)//\(zip)//\(country)//\(peopleInGroup)//\(danger)"
                                             let messageComposeVC = messageComposer.configureTextMessage(text: text)
-                                            messageSentImageView.isHidden = false
                                             present(messageComposeVC, animated: true, completion: nil)
                                         }
                                     }
