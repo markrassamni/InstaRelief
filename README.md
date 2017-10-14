@@ -7,8 +7,8 @@ Kelly Broton, Ryan Morris, Garrett Stribling, and Mark Rassamni
 San Diego State University
 
 # Our Zombie Solution:
-TBA
+Mobile Deployment App
 
 # Code:
 
-*Currently Classified*
+*Currently Classified*=
