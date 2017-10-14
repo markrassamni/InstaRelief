@@ -1,9 +1,6 @@
-from PyQt5.QtCore import *
-from InstaReliefDesktop.UI.insta_relief_ui import Ui_MainWindow
 from PyQt5.QtWidgets import *
-from PyQt5 import QtGui, QtCore,QtWidgets
 from PyQt5.QtGui import QTextCursor
-import time
+
 
 class Form(QWidget):
 
@@ -29,6 +26,7 @@ class Form(QWidget):
         self.logOutput.append(name+" tweeted: " + text + " at: " + time)
         sb = self.logOutput.verticalScrollBar()
         sb.setValue(sb.maximum())
+
 
 if __name__ == '__main__':
     import sys
