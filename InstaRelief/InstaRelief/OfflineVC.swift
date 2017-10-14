@@ -18,6 +18,8 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     @IBOutlet weak var dangerTxt: UITextField!
     @IBOutlet weak var dangerView: UIView!
     @IBOutlet weak var dangerPicker: UIPickerView!
+    @IBOutlet weak var messageSentImageView: UIImageView!
+    
     
     var pickerDataSource = ["Fire", "Flood", "Zombie", "Hurricane", "Tornado"];
     let messageComposer = MessageComposer()
@@ -34,16 +36,6 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
         countryTxt.delegate = self
         crossStreetsTxt.delegate = self
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //    func textFieldDidBeginEditing(_ textField: UITextField) {
-    //        dangerView.isHidden = false
-    //        dangerTxt.isHidden = true
-    //    }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == dangerTxt {
@@ -78,15 +70,9 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     }
     
     @IBAction func sendPressed(_ sender: Any) {
-//         Make sure the device can send text messages
+         //Make sure the device can send text messages
                 if (messageComposer.canSendText()) {
                     // Obtain a configured MFMessageComposeViewController
-        //            let messageComposeVC = messageComposer.configuredMessageComposeViewController()
-                    
-//                    guard let streets = crossStreetsTxt.text else { let streets = "" }
-//                    guard let city = cityTxt.text else { let city = "" }
-//                    guard let state = stateTxt.text else { let state = "" }
-//                    guard let country = countryTxt.text else { let country = "" }
                     if let streets = crossStreetsTxt.text {
                         if let city = cityTxt.text {
                             if let state = stateTxt.text {
@@ -100,14 +86,6 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                             }
                         }
                     }
-        
-//                    let text = "\(crossStreetsTxt.text)\\\(cityTxt.text)\\\(stateTxt.text)\\\(countryTxt.text)\\\(dangerTxt.text)"
-//                    let messageComposeVC = messageComposer.configureTextMessage(text: text)
-        
-                    // Present the configured MFMessageComposeViewController instance
-                    // Note that the dismissal of the VC will be handled by the messageComposer instance,
-                    // since it implements the appropriate delegate call-back
-//                    present(messageComposeVC, animated: true, completion: nil)
                 } else {
                     // Let the user know if his/her device isn't able to send text messages
                     let errorAlert = UIAlertController(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", preferredStyle: .alert)
@@ -115,12 +93,24 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                 }
     }
     
+    func sentSuccessfully(){
+        print("CAlled")
+        UIViewPropertyAnimator(duration: 0.5, curve: .easeOut, animations: {
+            self.messageSentImageView.alpha = 1.0
+        }).startAnimation()
+        
+//        let when = DispatchTime.now() + 0.5
+//        DispatchQueue.main.asyncAfter(deadline: when) {
+//            UIViewPropertyAnimator(duration: 0.5, curve: .easeIn, animations: {
+//                self.messageSentImageView.alpha = 0.0
+//            }).startAnimation()
+//        }
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("Should return")
-//        self.view.endEditing(true)
         textField.resignFirstResponder()
         return true
-//        return false
     }
     
     

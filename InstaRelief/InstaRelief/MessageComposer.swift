@@ -13,6 +13,8 @@ let textMessageRecipients = ["1-619-304-5612"]
 
 class MessageComposer: NSObject, MFMessageComposeViewControllerDelegate {
     
+    var offlineVC: OfflineVC?
+    
     // A wrapper function to indicate whether or not a text message can be sent from the user's device
     func canSendText() -> Bool {
         return MFMessageComposeViewController.canSendText()
@@ -32,11 +34,21 @@ class MessageComposer: NSObject, MFMessageComposeViewControllerDelegate {
         messageComposeVC.messageComposeDelegate = self
         messageComposeVC.recipients = textMessageRecipients
         messageComposeVC.body = text
+//        if let offlineVC = AppDelegate.application(self window.rootViewController as OfflineVC {
+//
+//        }
+        if let wd = UIApplication.shared.delegate?.window{
+            let vc = wd!.rootViewController
+            if vc is OfflineVC {
+                offlineVC = vc as? OfflineVC
+            }
+        }
         return messageComposeVC
     }
     
     // MFMessageComposeViewControllerDelegate callback - dismisses the view controller when the user is finished with it
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         controller.dismiss(animated: true, completion: nil)
+        offlineVC?.sentSuccessfully()
     }
 }

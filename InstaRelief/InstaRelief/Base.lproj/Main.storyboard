@@ -22,6 +22,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hxp-0C-Ihh">
+                                <rect key="frame" x="87.5" y="622" width="200" height="30"/>
+                                <color key="backgroundColor" red="0.85882352939999995" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="5U0-Hp-K03"/>
+                                </constraints>
+                                <state key="normal" title="Send">
+                                    <color key="titleColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H0M-rC-GcC"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tqc-pf-L5N" userLabel="DangerView">
                                 <rect key="frame" x="10" y="288" width="355" height="128"/>
                                 <subviews>
@@ -75,25 +88,17 @@
                                     </textField>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hxp-0C-Ihh">
-                                <rect key="frame" x="87.5" y="622" width="200" height="30"/>
-                                <color key="backgroundColor" red="0.85882352939999995" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="5U0-Hp-K03"/>
-                                </constraints>
-                                <state key="normal" title="Send">
-                                    <color key="titleColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H0M-rC-GcC"/>
-                                </connections>
-                            </button>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message_sent" translatesAutoresizingMaskIntoConstraints="NO" id="zeH-eY-L4J">
+                                <rect key="frame" x="0.0" y="-26.5" width="375" height="720"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="oD1-v1-wv7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1GA-mo-BhX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oD1-v1-wv7" secondAttribute="trailing" constant="10" id="6Xx-9b-M7V"/>
                             <constraint firstItem="oD1-v1-wv7" firstAttribute="top" secondItem="OuX-52-bRg" secondAttribute="bottom" constant="30" id="EBx-Zp-rhC"/>
+                            <constraint firstItem="zeH-eY-L4J" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="GAK-bj-h98"/>
+                            <constraint firstItem="zeH-eY-L4J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="QxV-Mr-yvJ"/>
                             <constraint firstItem="tqc-pf-L5N" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="SZv-Mc-iiB"/>
                             <constraint firstItem="OuX-52-bRg" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="T1T-YW-fm6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tqc-pf-L5N" secondAttribute="trailing" constant="10" id="Xwn-ka-5s8"/>
@@ -101,6 +106,8 @@
                             <constraint firstItem="Hxp-0C-Ihh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bL6-rh-f9O"/>
                             <constraint firstItem="tqc-pf-L5N" firstAttribute="top" secondItem="0T6-vY-1Qj" secondAttribute="top" id="cpW-ej-hLO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Hxp-0C-Ihh" secondAttribute="bottom" constant="15" id="kXY-HI-c6w"/>
+                            <constraint firstAttribute="trailing" secondItem="zeH-eY-L4J" secondAttribute="trailing" id="qVL-5c-RLX"/>
+                            <constraint firstItem="zeH-eY-L4J" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uTZ-Y9-HcI"/>
                             <constraint firstItem="OuX-52-bRg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yYK-ox-oTL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -112,6 +119,7 @@
                         <outlet property="dangerPicker" destination="ciV-3m-BFT" id="nno-64-yiW"/>
                         <outlet property="dangerTxt" destination="0T6-vY-1Qj" id="Cev-SQ-M1u"/>
                         <outlet property="dangerView" destination="tqc-pf-L5N" id="k7a-mm-miW"/>
+                        <outlet property="messageSentImageView" destination="zeH-eY-L4J" id="hVN-mE-IUm"/>
                         <outlet property="stateTxt" destination="oke-Bj-UNc" id="XnN-MZ-N7k"/>
                     </connections>
                 </viewController>
@@ -120,4 +128,7 @@
             <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="message_sent" width="720" height="720"/>
+    </resources>
 </document>
