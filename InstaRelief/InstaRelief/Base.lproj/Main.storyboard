@@ -177,10 +177,25 @@
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
         </scene>
-        <!--SuccessVC-->
+        <!--View Controller-->
+        <scene sceneID="xSz-fN-ve6">
+            <objects>
+                <viewController id="0ng-Qb-ko7" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ocX-y3-4pW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="u5x-b6-PgP"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eAn-LK-I9J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="842" y="34"/>
+        </scene>
+        <!--View Controller-->
         <scene sceneID="Wig-lq-yth">
             <objects>
-                <viewController storyboardIdentifier="SuccessVC" id="KRx-Af-DpD" customClass="SuccessVC" customModule="instaRelief" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SuccessVC" id="KRx-Af-DpD" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YVg-eq-WIQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -197,13 +212,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BO2-4K-f5j"/>
                     </view>
-                    <connections>
-                        <outlet property="imageView" destination="ROe-6y-kqb" id="tbh-zT-BnT"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrk-M5-zo0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="862" y="34"/>
+            <point key="canvasLocation" x="33" y="681"/>
         </scene>
     </scenes>
     <resources>
