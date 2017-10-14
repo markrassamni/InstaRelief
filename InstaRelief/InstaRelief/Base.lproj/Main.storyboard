@@ -318,9 +318,20 @@ w/ SMS</string>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sentMessage" translatesAutoresizingMaskIntoConstraints="NO" id="4HK-59-wlx">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pEZ-aZ-ct5">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="JZy-OE-1Vs">
+                                <rect key="frame" x="177" y="323" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="pEZ-aZ-ct5" secondAttribute="bottom" id="0g3-Xi-MTN"/>
+                            <constraint firstItem="JZy-OE-1Vs" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="1JK-EV-j8L"/>
+                            <constraint firstItem="JZy-OE-1Vs" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" id="7gY-B1-htQ"/>
+                            <constraint firstItem="pEZ-aZ-ct5" firstAttribute="top" secondItem="ocX-y3-4pW" secondAttribute="top" id="BUr-pW-rbF"/>
+                            <constraint firstItem="pEZ-aZ-ct5" firstAttribute="leading" secondItem="u5x-b6-PgP" secondAttribute="leading" id="J7X-31-vQJ"/>
                             <constraint firstItem="ikv-0t-cMX" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="JNK-Zl-WlZ"/>
                             <constraint firstItem="QiR-xz-RQW" firstAttribute="top" secondItem="u5x-b6-PgP" secondAttribute="top" id="LAd-LO-UwV"/>
                             <constraint firstItem="u5x-b6-PgP" firstAttribute="trailing" secondItem="4HK-59-wlx" secondAttribute="trailing" id="XlX-8A-gOQ"/>
@@ -332,6 +343,7 @@ w/ SMS</string>
                             <constraint firstItem="u5x-b6-PgP" firstAttribute="trailing" secondItem="QiR-xz-RQW" secondAttribute="trailing" constant="5" id="mtE-3O-8iu"/>
                             <constraint firstItem="tmv-dc-mZL" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="n7D-wu-LuY"/>
                             <constraint firstItem="ikv-0t-cMX" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" id="vVq-vH-8oO"/>
+                            <constraint firstAttribute="trailing" secondItem="pEZ-aZ-ct5" secondAttribute="trailing" id="vfh-JJ-8RQ"/>
                             <constraint firstItem="pJT-LE-3mX" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="xaH-j2-NEC"/>
                             <constraint firstItem="tmv-dc-mZL" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" constant="50" id="xq7-rM-NR8"/>
                             <constraint firstItem="4HK-59-wlx" firstAttribute="top" secondItem="ocX-y3-4pW" secondAttribute="top" id="z6q-fH-4rV"/>
@@ -339,8 +351,10 @@ w/ SMS</string>
                         <viewLayoutGuide key="safeArea" id="u5x-b6-PgP"/>
                     </view>
                     <connections>
+                        <outlet property="dangerImageView" destination="pEZ-aZ-ct5" id="7aZ-xB-IHX"/>
                         <outlet property="dangerPicker" destination="mNJ-xT-HAY" id="5xl-Vv-m7h"/>
                         <outlet property="dangerView" destination="ikv-0t-cMX" id="wnV-oP-ehW"/>
+                        <outlet property="imageSpinner" destination="JZy-OE-1Vs" id="MWd-Wn-CLG"/>
                         <outlet property="reportButton" destination="fVg-D5-Ufr" id="cGc-8l-YpF"/>
                         <outlet property="requestButton" destination="tmv-dc-mZL" id="wYM-qf-zHu"/>
                         <outlet property="successImage" destination="4HK-59-wlx" id="dqe-cd-wpL"/>

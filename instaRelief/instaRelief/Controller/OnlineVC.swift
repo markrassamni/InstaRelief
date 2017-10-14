@@ -29,6 +29,9 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     @IBOutlet weak var dangerView: UIView!
     @IBOutlet weak var dangerPicker: UIPickerView!
     @IBOutlet weak var successImage: UIImageView!
+    @IBOutlet weak var dangerImageView: UIImageView!
+    @IBOutlet weak var imageSpinner: UIActivityIndicatorView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +41,7 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
         ref = Database.database().reference()
         dangerPicker.delegate = self
         dangerPicker.dataSource = self
+        imageSpinner.isHidden = true
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -95,7 +99,6 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
             let minutes = calendar.component(.minute, from: date)
             let seconds = calendar.component(.second, from: date)
             let dateChild = "\(month) \(day) \(hour):\(minutes):\(seconds)"
-            print("CURRENT CITY: \(city)")
             self.ref.child("appUsers").child(uuid).child(dateChild).child("city").setValue(city) { (error, ref) -> Void in
                 if error == nil {
                     self.ref.child("appUsers").child(uuid).child(dateChild).child("latitude").setValue(location.coordinate.latitude) { (error, ref) -> Void in
@@ -138,13 +141,65 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     
     func requestReport(){
         // send location and phone number
-        if let location = currentLocation {
+//        let phoneRef = ref.child("texts")
+        if let city = currentCity {
+//            phoneRef.observeSingleEvent(of: .value, with: { snapshot in
+//                print(snapshot.childrenCount) // I got the expected number of items
+//                let enumerator = snapshot.children
+//                while let rest = enumerator.nextObject() as? DataSnapshot {
+//                    print(rest.value)
+//                }
+//            })
+//            let link = "http://www.apple.com/euro/ios/ios8/a/generic/images/og.png"
+//            guard let url = URL(string: link) else { return }
+//            getDataFromUrl(url: url, completion: { (data: Data?, response: URLResponse?, error: Error?) in
+//
+//            })
+            
+            if let url = URL(string: "http://www.apple.com/euro/ios/ios8/a/generic/images/og.png") {
+//                imageView.contentMode = .scaleAspectFit
+                downloadImage(url: url)
+            }
             
         } else {
             let errorAlert = UIAlertController(title: "Current Location Unavailable", message: "Your device is not able to send your current location. Try again later.", preferredStyle: .alert)
             errorAlert.show(self, sender: nil)
             self.locationManager.requestLocation()
         }
+    }
+    
+    func downloadImage(url: URL) {
+        // Download Started
+        imageSpinner.isHidden = false
+        imageSpinner.startAnimating()
+        getDataFromUrl(url: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            // Download finished
+            DispatchQueue.main.async() {
+                self.dangerImageView.image = UIImage(data: data)
+                self.dangerImageView.isHidden = false
+                self.requestButton.isHidden = true
+                self.reportButton.isHidden = true
+                self.imageSpinner.stopAnimating()
+                self.imageSpinner.isHidden = true
+            }
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        dangerImageView.isHidden = true
+        reportButton.isHidden = false
+        requestButton.isHidden = false
+    }
+    
+    
+    
+    func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            completion(data, response, error)
+            }.resume()
     }
     
     
@@ -155,7 +210,7 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     }
     
     @IBAction func requestPressed(_ sender: Any) {
-        
+        requestReport()
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
