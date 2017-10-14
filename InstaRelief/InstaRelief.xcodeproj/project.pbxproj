@@ -15,6 +15,8 @@
 		F962707E1F91AF350043588F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F962707C1F91AF350043588F /* LaunchScreen.storyboard */; };
 		F9C80AB61F9229C3001E574E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C80AB51F9229C3001E574E /* Constants.swift */; };
 		F9C80AB91F922F6D001E574E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9C80AB81F922F6D001E574E /* GoogleService-Info.plist */; };
+		F9C80ABB1F9233C5001E574E /* InternetAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C80ABA1F9233C5001E574E /* InternetAvailability.swift */; };
+		F9C80ABD1F923597001E574E /* LoadingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C80ABC1F923597001E574E /* LoadingVC.swift */; };
 		F9C9FBAB1F91FB7800B8F653 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F91292611F91C35A00A0EEB5 /* Assets.xcassets */; };
 		F9C9FBAD1F9206D800B8F653 /* OnlineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C9FBAC1F9206D800B8F653 /* OnlineVC.swift */; };
 /* End PBXBuildFile section */
@@ -33,6 +35,8 @@
 		F962707F1F91AF350043588F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9C80AB51F9229C3001E574E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F9C80AB81F922F6D001E574E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F9C80ABA1F9233C5001E574E /* InternetAvailability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetAvailability.swift; sourceTree = "<group>"; };
+		F9C80ABC1F923597001E574E /* LoadingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVC.swift; sourceTree = "<group>"; };
 		F9C9FBAC1F9206D800B8F653 /* OnlineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +109,7 @@
 			children = (
 				F96270751F91AF350043588F /* OfflineVC.swift */,
 				F9C9FBAC1F9206D800B8F653 /* OnlineVC.swift */,
+				F9C80ABC1F923597001E574E /* LoadingVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				F912925F1F91B54800A0EEB5 /* MessageComposer.swift */,
+				F9C80ABA1F9233C5001E574E /* InternetAvailability.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -254,10 +260,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9C80AB61F9229C3001E574E /* Constants.swift in Sources */,
+				F9C80ABB1F9233C5001E574E /* InternetAvailability.swift in Sources */,
 				F91292601F91B54800A0EEB5 /* MessageComposer.swift in Sources */,
 				F96270761F91AF350043588F /* OfflineVC.swift in Sources */,
 				F96270741F91AF350043588F /* AppDelegate.swift in Sources */,
 				F9C9FBAD1F9206D800B8F653 /* OnlineVC.swift in Sources */,
+				F9C80ABD1F923597001E574E /* LoadingVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

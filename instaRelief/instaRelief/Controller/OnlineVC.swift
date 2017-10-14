@@ -35,6 +35,7 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
         ref = Database.database().reference()
         dangerPicker.delegate = self
         dangerPicker.dataSource = self
+        print("IS AVAIL: \(isInternetAvailable())")
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -63,8 +64,6 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     
     func reportDanger(danger: String){
         if let location = currentLocation {
-            print(location.coordinate.latitude)
-            print(location.coordinate.longitude)
             let uuid = UIDevice.current.identifierForVendor!.uuidString
             let date = Date()
             let calendar = Calendar.current

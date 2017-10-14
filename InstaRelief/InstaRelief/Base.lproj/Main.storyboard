@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0ng-Qb-ko7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="On1-R1-Gvj">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -15,10 +15,46 @@
         </array>
     </customFonts>
     <scenes>
-        <!--ViewController-->
+        <!--LoadingVC-->
+        <scene sceneID="cZ2-34-pPD">
+            <objects>
+                <viewController id="On1-R1-Gvj" customClass="LoadingVC" customModule="instaRelief" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vZA-My-Ogv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InstaRelief" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXq-2y-Cvr">
+                                <rect key="frame" x="89.5" y="20" width="196" height="57.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="42"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="zYg-fS-Of5">
+                                <rect key="frame" x="177" y="323" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.91921168565750122" green="0.47283178967737383" blue="0.38840177861430147" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="aXq-2y-Cvr" firstAttribute="centerX" secondItem="vZA-My-Ogv" secondAttribute="centerX" id="3eS-fV-u25"/>
+                            <constraint firstItem="zYg-fS-Of5" firstAttribute="centerY" secondItem="vZA-My-Ogv" secondAttribute="centerY" id="9h6-1i-4L7"/>
+                            <constraint firstItem="zYg-fS-Of5" firstAttribute="centerX" secondItem="vZA-My-Ogv" secondAttribute="centerX" id="PDg-Aq-gva"/>
+                            <constraint firstItem="aXq-2y-Cvr" firstAttribute="top" secondItem="O7U-Co-cZq" secondAttribute="top" id="XAJ-Ug-5eN"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="O7U-Co-cZq"/>
+                    </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="OfflineVC" id="LhF-5C-csr"/>
+                        <segue destination="0ng-Qb-ko7" kind="presentation" identifier="OnlineVC" id="dZX-Ux-zgP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VsF-ix-2S2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-801" y="34"/>
+        </scene>
+        <!--OfflineVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="OfflineVC" id="BYZ-38-t0r" userLabel="ViewController" customClass="OfflineVC" customModule="instaRelief" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OfflineVC" id="BYZ-38-t0r" customClass="OfflineVC" customModule="instaRelief" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -36,12 +72,6 @@
                                     <action selector="sendPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H0M-rC-GcC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InstaRelief" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OuX-52-bRg">
-                                <rect key="frame" x="89" y="20" width="196" height="57.5"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="42"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="oD1-v1-wv7">
                                 <rect key="frame" x="10" y="107.5" width="355" height="359"/>
                                 <subviews>
@@ -142,6 +172,12 @@
                                     <constraint firstItem="vLD-8q-xAQ" firstAttribute="top" secondItem="tqc-pf-L5N" secondAttribute="top" constant="5" id="vhL-aV-dhH"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InstaRelief" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OuX-52-bRg">
+                                <rect key="frame" x="89" y="20" width="196" height="57.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="42"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -175,7 +211,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
+            <point key="canvasLocation" x="-39" y="196"/>
         </scene>
         <!--OnlineVC-->
         <scene sceneID="xSz-fN-ve6">
@@ -232,14 +268,22 @@
                                     <constraint firstAttribute="trailing" secondItem="J9g-j6-fui" secondAttribute="trailing" constant="5" id="uBO-K0-dNn"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InstaRelief" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pJT-LE-3mX">
+                                <rect key="frame" x="89.5" y="20" width="196" height="57.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="42"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ikv-0t-cMX" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="JNK-Zl-WlZ"/>
                             <constraint firstItem="fVg-D5-Ufr" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" constant="-50" id="aaG-KC-Wz8"/>
+                            <constraint firstItem="pJT-LE-3mX" firstAttribute="top" secondItem="u5x-b6-PgP" secondAttribute="top" id="jiT-5p-o3f"/>
                             <constraint firstItem="fVg-D5-Ufr" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="mhq-4N-2kb"/>
                             <constraint firstItem="tmv-dc-mZL" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="n7D-wu-LuY"/>
                             <constraint firstItem="ikv-0t-cMX" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" id="vVq-vH-8oO"/>
+                            <constraint firstItem="pJT-LE-3mX" firstAttribute="centerX" secondItem="ocX-y3-4pW" secondAttribute="centerX" id="xaH-j2-NEC"/>
                             <constraint firstItem="tmv-dc-mZL" firstAttribute="centerY" secondItem="ocX-y3-4pW" secondAttribute="centerY" constant="50" id="xq7-rM-NR8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="u5x-b6-PgP"/>
@@ -253,7 +297,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAn-LK-I9J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="992.79999999999995" y="33.733133433283363"/>
+            <point key="canvasLocation" x="-39" y="-488"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Wig-lq-yth">
@@ -278,7 +322,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrk-M5-zo0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="33" y="681"/>
+            <point key="canvasLocation" x="689" y="-134"/>
         </scene>
     </scenes>
     <resources>
