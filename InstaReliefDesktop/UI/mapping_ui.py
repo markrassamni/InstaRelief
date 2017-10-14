@@ -37,20 +37,48 @@ class Mapping_Ui(QtGui.QMainWindow):
         self.cities = ['Manhattan Beach', 'Redondo Beach', 'Redondo Beach']
         self.types = ['Zombie', 'Fire', 'Water']
 
+        self.setMouseTracking(True)
+
+    def mousePressEvent(self, event):
+        if event.buttons() & QtCore.Qt.LeftButton:
+            self.dragstart = event.pos()
+            if self.ui_mainwindow.firefighter_button.isDown():
+                print ("Add Fire Fighter")
+                if self.total_fire_fighters > 0 and not self.ui_mainwindow.firefighter_button.isDown():
+                    self.total_fire_fighters -= 1
+                    self.ui_mainwindow.firefighter_button.setText(str(self.total_fire_fighters) + ' Fire Fighters')
+            elif self.ui_mainwindow.swat_button.isDown():
+                print ("Add Swat")
+                if self.total_swat > 0 and not self.ui_mainwindow.swat_button.isDown():
+                    self.total_swat -= 1
+                    self.ui_mainwindow.swat_button.setText(str(self.total_swat) + ' Swat Teams')
+            elif self.ui_mainwindow.coastguard_button.isDown():
+                print ("Add coast guard")
+                if self.total_coast_guard > 0 and not self.ui_mainwindow.coastguard_button.isDown():
+                    self.total_coast_guard -= 1
+                    self.ui_mainwindow.coastguard_button.setText(str(self.total_coast_guard)+' Coast Guard Teams')
+
+
     def firefighter_button_clicked(self):
-        if self.total_fire_fighters > 0:
-            self.total_fire_fighters -= 1
-            self.ui_mainwindow.firefighter_button.setText(str(self.total_fire_fighters)+' Fire Fighters')
+
+        if self.ui_mainwindow.firefighter_button.isDown():
+            self.ui_mainwindow.firefighter_button.setDown(False)
+        else:
+            self.ui_mainwindow.firefighter_button.setDown(True)
 
     def swat_button_clicked(self):
-        if self.total_swat > 0:
-            self.total_swat -= 1
-            self.ui_mainwindow.swat_button.setText(str(self.total_swat)+' Swat Teams')
+
+        if self.ui_mainwindow.swat_button.isDown():
+            self.ui_mainwindow.swat_button.setDown(False)
+        else:
+            self.ui_mainwindow.swat_button.setDown(True)
 
     def coastguard_button_clicked(self):
-        if self.total_coast_guard > 0:
-            self.total_coast_guard -= 1
-            self.ui_mainwindow.coastguard_button.setText(str(self.total_coast_guard)+' Coast Guard Teams')
+
+        if self.ui_mainwindow.coastguard_button.isDown():
+            self.ui_mainwindow.coastguard_button.setDown(False)
+        else:
+            self.ui_mainwindow.coastguard_button.setDown(True)
 
     def generate_map(self):
 
@@ -76,6 +104,7 @@ class Mapping_Ui(QtGui.QMainWindow):
         canvas.draw()
         w, h = fig.get_size_inches()*fig.get_dpi()
         self.ui_mainwindow.maplayout.addWidget(canvas)
+        canvas.mousePressEvent = self.mousePressEvent
         image = np.fromstring(canvas.tostring_rgb(), dtype='uint8')
         image = np.reshape(image, (h, w, 3))
 
