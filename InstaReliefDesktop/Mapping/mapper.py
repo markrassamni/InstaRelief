@@ -3,8 +3,6 @@ import urllib
 import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
-from pyqtgraph.Qt import QtCore, QtGui
-import pyqtgraph as pg
 import numpy as np
 import cv2
 import googlemaps

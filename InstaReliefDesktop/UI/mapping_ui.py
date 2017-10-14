@@ -1,7 +1,6 @@
 from InstaReliefDesktop.Mapping.mapper import Mapper
 from InstaReliefDesktop.UI.insta_relief_ui import Ui_MainWindow
-from PyQt5 import QtGui, QtCore
-import pyqtgraph as pg
+from PyQt5 import QtGui, QtCore,QtWidgets
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -10,12 +9,14 @@ import cv2
 
 
 
-class Mapping_Ui(QtGui.QMainWindow):
+class Mapping_Ui(QtWidgets.QMainWindow):
     def __init__(self, mapper):
         super(Mapping_Ui, self).__init__(None)
         self.mapper = mapper
         self.ui_mainwindow = Ui_MainWindow()
         self.ui_mainwindow.setupUi(self)
+
+        self.button_pressed = False
 
         self.total_fire_fighters = 20
         self.total_swat = 10
@@ -37,6 +38,7 @@ class Mapping_Ui(QtGui.QMainWindow):
         self.cities = ['Manhattan Beach', 'Redondo Beach', 'Redondo Beach']
         self.types = ['Zombie', 'Fire', 'Water']
 
+        self.canvas = None
         self.setMouseTracking(True)
 
     def mousePressEvent(self, event):
@@ -44,38 +46,39 @@ class Mapping_Ui(QtGui.QMainWindow):
             self.dragstart = event.pos()
             if self.ui_mainwindow.firefighter_button.isDown():
                 print ("Add Fire Fighter")
-                if self.total_fire_fighters > 0 and not self.ui_mainwindow.firefighter_button.isDown():
+                if self.total_fire_fighters > 0 and self.ui_mainwindow.firefighter_button.isDown():
                     self.total_fire_fighters -= 1
                     self.ui_mainwindow.firefighter_button.setText(str(self.total_fire_fighters) + ' Fire Fighters')
             elif self.ui_mainwindow.swat_button.isDown():
                 print ("Add Swat")
-                if self.total_swat > 0 and not self.ui_mainwindow.swat_button.isDown():
+                if self.total_swat > 0 and self.ui_mainwindow.swat_button.isDown():
                     self.total_swat -= 1
                     self.ui_mainwindow.swat_button.setText(str(self.total_swat) + ' Swat Teams')
             elif self.ui_mainwindow.coastguard_button.isDown():
                 print ("Add coast guard")
-                if self.total_coast_guard > 0 and not self.ui_mainwindow.coastguard_button.isDown():
+                if self.total_coast_guard > 0 and self.ui_mainwindow.coastguard_button.isDown():
                     self.total_coast_guard -= 1
                     self.ui_mainwindow.coastguard_button.setText(str(self.total_coast_guard)+' Coast Guard Teams')
 
 
     def firefighter_button_clicked(self):
-
-        if self.ui_mainwindow.firefighter_button.isDown():
+        if self.button_pressed:
             self.ui_mainwindow.firefighter_button.setDown(False)
+            self.button_pressed = False
         else:
             self.ui_mainwindow.firefighter_button.setDown(True)
+            self.button_pressed = True
 
     def swat_button_clicked(self):
 
-        if self.ui_mainwindow.swat_button.isDown():
+        if not self.ui_mainwindow.swat_button.isDown():
             self.ui_mainwindow.swat_button.setDown(False)
         else:
             self.ui_mainwindow.swat_button.setDown(True)
 
     def coastguard_button_clicked(self):
 
-        if self.ui_mainwindow.coastguard_button.isDown():
+        if not self.ui_mainwindow.coastguard_button.isDown():
             self.ui_mainwindow.coastguard_button.setDown(False)
         else:
             self.ui_mainwindow.coastguard_button.setDown(True)
@@ -95,17 +98,17 @@ class Mapping_Ui(QtGui.QMainWindow):
         gauss = self.twoD_Gaussian(x, y, w/2, h/2, 0.05*x.max(), 0.05*y.max())
 
         fig = plt.figure()
-        canvas = FigureCanvas(fig)
+        self.canvas = FigureCanvas(fig)
         ax = fig.add_subplot(111)
         fig.tight_layout(pad=0)
         ax.axis('off')
         ax.imshow(cv2.cvtColor(self.mapper.image, cv2.COLOR_BGR2RGB))
         ax.contourf(x, y, gauss.reshape(x.shape[0], y.shape[1]), 15, cmap=self.zombie_cmap)
-        canvas.draw()
+        self.canvas.draw()
         w, h = fig.get_size_inches()*fig.get_dpi()
-        self.ui_mainwindow.maplayout.addWidget(canvas)
-        canvas.mousePressEvent = self.mousePressEvent
-        image = np.fromstring(canvas.tostring_rgb(), dtype='uint8')
+        self.ui_mainwindow.maplayout.addWidget(self.canvas)
+        self.canvas.mousePressEvent = self.mousePressEvent
+        image = np.fromstring(self.canvas.tostring_rgb(), dtype='uint8')
         image = np.reshape(image, (h, w, 3))
 
 

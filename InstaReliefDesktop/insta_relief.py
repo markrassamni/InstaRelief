@@ -1,5 +1,4 @@
-from PyQt5 import QtCore, QtGui
-import pyqtgraph as pg
+from PyQt5 import QtCore, QtGui,QtWidgets
 from InstaReliefDesktop.Mapping.mapper import Mapper
 from InstaReliefDesktop.UI.mapping_ui import Mapping_Ui
 from InstaReliefDesktop.UI.insta_relief_ui import Ui_MainWindow
@@ -7,9 +6,9 @@ from InstaReliefDesktop.UI.insta_relief_ui import Ui_MainWindow
 import sys
 
 def main():
-    app = QtGui.QApplication([])
+    app = QtWidgets.QApplication([])
 
-    app.setStyle(QtGui.QStyleFactory.create("plastique"))
+    app.setStyle(QtWidgets.QStyleFactory.create("plastique"))
     pal = QtGui.QPalette()
     pal.setColor(QtGui.QPalette.Window, QtGui.QColor(53, 53, 53))
     pal.setColor(QtGui.QPalette.WindowText, QtGui.QColor(255, 255, 255))
@@ -33,7 +32,7 @@ def main():
     mapping_window.generate_map()
     mapping_window.show()
     mapping_window.setWindowTitle('Insta-Relief')
-    QtGui.QApplication.instance().exec_()
+    QtWidgets.QApplication.instance().exec_()
 
 main()
 
