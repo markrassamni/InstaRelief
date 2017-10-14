@@ -1,60 +1,89 @@
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
+import tweepy
 import time
 import json
-import numpy
+import pyrebase
 
-#Variables that contains the user credentials to access Twitter API
+# User Credentials
 access_token = "919017548452003840-OoV9muwD1Ct4Vb7xpbv80WhGQKDzWUJ"
 access_token_secret = "fmehS5sHuV9neS6E3CwfznHMI27NNbxbQSfYGibwiQW2t"
 consumer_key = "Mv2QN24elvdC5YbqVlSeq9Iui"
 consumer_secret = "tGZjOHxg9e2IHpxFENecxexXArJJI3UNmuLr7VATbFaCWdRfmf"
 
+config = {
+  "apiKey": "AIzaSyAFjbldaX_ZJw_yOLahlYJNFtlBbxP8hTg",
+  "authDomain": "ngcode-9f40c.firebaseapp.com",
+  "databaseURL": "https://ngcode-9f40c.firebaseio.com",
+  "storageBucket": "ngcode-9f40c.appspot.com"
+}
 
-#This is a basic listener that just prints received tweets to stdout.
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
+
+
 class StdOutListener(StreamListener):
     numTweets = 0
     currentText = None
     currentLocation = None
-
     text_file = None
-    def __init__(self, text_file):
-        self.text_file = text_file
+
+    def set_file(self, file):
+        self.text_file = file
+
     def on_data(self, data):
-        #write to text file
+        # write to text file
         print(data)
         text_file.write(data)
         text_file.flush()
         self.numTweets += 1
         time.sleep(0.1)
-
-
-        #upload to database
-        tweet = json.loads(data)
-        tweetText = tweet['text']
-        tweetName = tweet['name']
-        tweetScreenName = tweet['screen_name']
-        tweetCreatedAt = tweet['created_at']
-        print(tweetText)
+        data = json.loads(data)
+        self.upload_data(data)
         return True
-    #gggggg
 
     def on_error(self, status):
         text_file.write(status)
-        print (status)
+        print(status)
+
+    @staticmethod
+    def upload_data(data):
+        # save important information to variables
+        tweet = data
+        tweet_text = tweet['text']
+        tweet_name = tweet['user']['name']
+        tweet_screen_name = tweet['user']['screen_name']
+        tweet_created_at = tweet['user']['created_at']
+        tweet_coords = tweet['coordinates']
+        # tweetMediaUrl = tweet[0]['entities']['media']['media_url_https']
+
+        # upload variables to database
+        data = {"text": tweet_text, "name": tweet_name, "screen_name": tweet_screen_name, "coordinates": tweet_coords}
+        db.child("Tweets").child(tweet_screen_name).child(tweet_created_at).push(data)
+
 
 if __name__ == '__main__':
 
-    #This handles Twitter authetification and the connection to Twitter Streaming API
+    def upload_latest_tweets(name, number):
+        status = api.user_timeline(screen_name=name, count=number)
+        for tweet in status:
+            listen.upload_data(tweet)
 
     text_file = open("CalFireFeed.txt", "w")
     time.sleep(1.0)
-    l = StdOutListener(text_file)
+    listen = StdOutListener()
+    listen.set_file(text_file)
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
-    stream = Stream(auth, l)
+    stream = Stream(auth, listen)
+
+    api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
+
+    upload_latest_tweets("SanDiegoPD", 10)
+    upload_latest_tweets("CALFIRES", 10)
+
+    # listening for new tweets from specified users
     print("listening")
-    #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
-    stream.filter(follow=['876731042'])
+    stream.filter(follow=['876731042'], track=['#yewwwww', '#NorCalFires', '#12345'])  # 876731042 is kelly
     text_file.close()
