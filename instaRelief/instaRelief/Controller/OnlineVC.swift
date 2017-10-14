@@ -129,13 +129,14 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     
     func requestReport(){
         if let city = currentCity {
-            print(city)
             let cityRef = ref.child("Images")
             cityRef.observeSingleEvent(of: .value, with: { snapshot in
                 let enumerator = snapshot.children
+                var foundCity = false
                 while let rest = enumerator.nextObject() as? DataSnapshot {
-                    print(rest.key)
+//                    print("\(rest.key), \(city)")
                     if rest.key == city{
+                        foundCity = true
                         let urlRef = cityRef.child(rest.key)
                         urlRef.observeSingleEvent(of: .value, with: { snapshot in
                             let urlEnum = snapshot.children
@@ -155,14 +156,15 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
                                 }
                             }
                         })
-                    } else {
-                        let errorAlert = UIAlertController(title: "No Danger Available", message: "Could not find any danger in \(city)", preferredStyle: .alert)
-                        let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .cancel) { action -> Void in
-                            errorAlert.dismiss(animated: true, completion: nil)
-                        }
-                        errorAlert.addAction(cancelAction)
-                        self.present(errorAlert, animated: true, completion: nil)
                     }
+                }
+                if !foundCity {
+                    let errorAlert = UIAlertController(title: "No Danger Available", message: "Could not find any danger in \(city)", preferredStyle: .alert)
+                    let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .cancel) { action -> Void in
+                        errorAlert.dismiss(animated: true, completion: nil)
+                    }
+                    errorAlert.addAction(cancelAction)
+                    self.present(errorAlert, animated: true, completion: nil)
                 }
             })
         } else {
