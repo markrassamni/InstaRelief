@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QTextCursor
 import pyrebase
-import json
+from PyQt5.QtCore import QTimer
+import time
 
 config = {
   "apiKey": "AIzaSyAFjbldaX_ZJw_yOLahlYJNFtlBbxP8hTg",
@@ -39,17 +40,20 @@ class Form(QWidget):
         self.logOutput.append(name+" tweeted: " + text + " at: " + time)
         sb = self.logOutput.verticalScrollBar()
         sb.setValue(sb.maximum())
+    def add_basic_tweet(self, text):
+        self.logOutput.moveCursor(QTextCursor.End)
+        text = str(text)
+        self.logOutput.append(text)
+        sb = self.logOutput.verticalScrollBar()
+        sb.setValue(sb.maximum())
+        time.sleep(5)
 
 
     def pullTweetsFromBase(self):
         my_stream = db.child("Tweets").stream(self.stream_handler)
 
     def stream_handler(self, message):
-        print(message)
-        current_name = message['name']
-        current_text = message['text']
-        current_time = message['user']['created_at']
-        screen.add_tweet(current_name, current_text, current_time)
+        screen.add_basic_tweet(message)
 
 
 if __name__ == '__main__':
