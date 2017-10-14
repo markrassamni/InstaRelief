@@ -84,6 +84,6 @@ if __name__ == '__main__':
     upload_latest_tweets("CALFIRES", 10)
 
     # listening for new tweets from specified users
-    print("listening")
+    print("listening: ")
     stream.filter(follow=['876731042'], track=['#yewwwww', '#NorCalFires', '#12345'])  # 876731042 is kelly
     text_file.close()
