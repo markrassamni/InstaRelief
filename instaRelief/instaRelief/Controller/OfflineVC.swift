@@ -92,7 +92,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     @IBAction func sendPressed(_ sender: Any) {
          //Make sure the device can send text messages
                 if (messageComposer.canSendText()) {
-                    // Obtain a configured MFMessageComposeViewController
+                    // Format text to how our server reads it
                     if let streets = addressText.text {
                         if let city = cityTxt.text {
                             if let state = stateTxt.text {
@@ -111,7 +111,11 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                 } else {
                     // Let the user know if his/her device isn't able to send text messages
                     let errorAlert = UIAlertController(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", preferredStyle: .alert)
-                    errorAlert.show(self, sender: nil)
+                    let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+                        errorAlert.dismiss(animated: true, completion: nil)
+                    }
+                    errorAlert.addAction(cancelAction)
+                    self.present(errorAlert, animated: true, completion: nil)
                 }
     }
     
@@ -122,6 +126,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+        dangerView.isHidden = true
         super.touchesBegan(touches, with: event)
     }
     
@@ -129,6 +134,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     
     
     func sentSuccessfully(){
+        // Clear/hide fields, display success image, bring back fields
         addressText.text = ""
         cityTxt.text = ""
         stateTxt.text = ""
@@ -173,6 +179,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     }
     
     @IBAction func connectOnlinePressed(_ sender: Any) {
+        // Try to establish a data connection
         connectOnlineBtn.isHidden = true
         activitySpinner.isHidden = false
         activitySpinner.startAnimating()
@@ -189,7 +196,11 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                         self.activitySpinner.isHidden = true
                         self.connectOnlineBtn.isHidden = false
                         let errorAlert = UIAlertController(title: "No data connection", message: "Your device is not able to connect to the internet.", preferredStyle: .alert)
-                        errorAlert.show(self, sender: nil)
+                        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+                            errorAlert.dismiss(animated: true, completion: nil)
+                        }
+                        errorAlert.addAction(cancelAction)
+                        self.present(errorAlert, animated: true, completion: nil)
                     }
                 }
             }

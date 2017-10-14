@@ -9,7 +9,8 @@
 import UIKit
 
 class LoadingVC: UIViewController {
-
+    
+    // Decide if user has data or should load the SMS page
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let when = DispatchTime.now() + 0.5

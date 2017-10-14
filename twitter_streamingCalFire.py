@@ -33,10 +33,25 @@ class StdOutListener(StreamListener):
     currentLocation = None
     text_file = None
     screen = None
-    def setUpStream(self):
+    stream = None
+    api = None
 
-        self.screen = Form()
-        self.screen.show()
+    def __init__(self, user_twitter_id, keywords):
+        super(StdOutListener, self).__init__(None)
+        self.text_file = open("CalFireFeed.txt", "w")
+
+        auth = OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+        self.stream = Stream(auth, self)
+
+        self.api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
+
+        self.upload_latest_tweets("SanDiegoPD", 10)
+        self.upload_latest_tweets("CAL_FIRE", 10)
+
+        print("listening: ")
+        self.stream.filter(follow=user_twitter_id, track=keywords)  # 876731042 is kelly
+        self.text_file.close()
 
     def set_file(self, file):
         self.text_file = file
@@ -44,8 +59,9 @@ class StdOutListener(StreamListener):
     def on_data(self, data):
         # write to text file
         print(data)
-        text_file.write(data)
-        text_file.flush()
+        print(data)
+        self.text_file.write(data)
+        self.text_file.flush()
         self.numTweets += 1
         time.sleep(0.1)
         data = json.loads(data)
@@ -53,10 +69,10 @@ class StdOutListener(StreamListener):
         return True
 
     def on_error(self, status):
-        text_file.write(status)
+        self.text_file.write(status)
         print(status)
 
-    def upload_data(self,data):
+    def upload_data(self, data):
         # save important information to variables
         tweet = data
         tweet_text = tweet['text']
@@ -80,11 +96,12 @@ class StdOutListener(StreamListener):
             print("Danger Tweet added")
 
         # upload variables to database
-        data = {"text": tweet_text, "name": tweet_name, "screen_name": tweet_screen_name, "coordinates": tweet_coords, "created_at": tweet_created_at}
+        data = {"text": tweet_text, "name": tweet_name, "screen_name": tweet_screen_name, "coordinates": tweet_coords,
+                "created_at": tweet_created_at}
         db.child("Tweets").child(tweet_screen_name).child(tweet_created_at).push(data)
         print("Tweet added")
 
-        #self.screen.add_tweet(tweet_name,tweet_text,tweet_created_at)
+        # self.screen.add_tweet(tweet_name,tweet_text,tweet_created_at)
         time.sleep(.2)
 
     def word_in_text(self, word, text):
@@ -99,30 +116,16 @@ class StdOutListener(StreamListener):
         return False
 
     def upload_latest_tweets(self, name, number):
-        status = api.user_timeline(screen_name=name, count=number)
+        status = self.api.user_timeline(screen_name=name, count=number)
         for tweet in status:
-            listen.upload_data(tweet)
+            self.upload_data(tweet)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    text_file = open("CalFireFeed.txt", "w")
     time.sleep(1.0)
-    listen = StdOutListener()
-    listen.set_file(text_file)
-    #listen.setUpStream()
-    auth = OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-    stream = Stream(auth, listen)
-
-    api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
-
-    listen.upload_latest_tweets("SanDiegoPD", 10)
-    listen.upload_latest_tweets("CALFIRES", 10)
-
-    # listening for new tweets from specified users
-    print("listening: ")
-    stream.filter(follow=['876731042'], track=['#NGDemo', '#NorCalFires', '#SantaRosaFire', '#HurricaneOphelia'])  # 876731042 is kelly
-    text_file.close()
+    listen = StdOutListener(['21249970', '74752708'], ['#NGZombieApocolypse', '#NorCalFire'])
+    #Taking input from SanDiegoPD, CALFIRES, and '#NGZombieApocolypse'
 
     sys.exit(app.exec_())
