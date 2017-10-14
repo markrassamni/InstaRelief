@@ -5,6 +5,7 @@ import tweepy
 import time
 import json
 import pyrebase
+import re
 
 # User Credentials
 access_token = "919017548452003840-OoV9muwD1Ct4Vb7xpbv80WhGQKDzWUJ"
@@ -58,12 +59,35 @@ class StdOutListener(StreamListener):
         tweet_coords = tweet['coordinates']
         # tweetMediaUrl = tweet[0]['entities']['media']['media_url_https']
 
-        # upload variables to database
-        data = {"text": tweet_text, "name": tweet_name, "screen_name": tweet_screen_name, "coordinates": tweet_coords}
-        db.child("Tweets").child(tweet_screen_name).child(tweet_created_at).push(data)
+        match = False
+        if "danger" in tweet_text:
+            match = True
+        are_coords = False
 
+        if tweet_coords is not None:
+                are_coords = True
+        if are_coords and match:
+            data = {"text": tweet_text, "name": tweet_name, "screen_name": tweet_screen_name,
+                    "coordinates": tweet_coords, "created_at": tweet_created_at}
+            db.child("Danger Tweets").child(tweet_screen_name).child(tweet_created_at).push(data)
+            print("Danger Tweet added")
+
+        # upload variables to database
+        data = {"text": tweet_text, "name": tweet_name, "screen_name": tweet_screen_name, "coordinates": tweet_coords, "created_at": tweet_created_at}
+        db.child("Tweets").child(tweet_screen_name).child(tweet_created_at).push(data)
+        print("Tweet added")
 
 if __name__ == '__main__':
+    def word_in_text(word, text):
+        text = str(text)
+        word = word.lower()
+        text = text.lower()
+        match = re.search(word, text)
+
+        if match:
+            print("match")
+            return True
+        return False
 
     def upload_latest_tweets(name, number):
         status = api.user_timeline(screen_name=name, count=number)
@@ -85,5 +109,5 @@ if __name__ == '__main__':
 
     # listening for new tweets from specified users
     print("listening: ")
-    stream.filter(follow=['876731042'], track=['#yewwwww', '#NorCalFires', '#12345'])  # 876731042 is kelly
+    stream.filter(follow=['876731042'], track=['#NGDemo', '#NorCalFires', '#SantaRosaFire', '#HurricaneOphelia'])  # 876731042 is kelly
     text_file.close()
