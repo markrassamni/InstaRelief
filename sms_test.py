@@ -54,19 +54,25 @@ def sms_reply():
     if msg_size == 7: # Check if user altered the message
         data = {"address":  msg_breakdown[0], "city": msg_breakdown[1], "state": msg_breakdown[2], "zip": msg_breakdown[3], "country":  msg_breakdown[4], "numPeople":  msg_breakdown[5], "disaster":  msg_breakdown[6]}
         db.child("texts").child(number).push(data)
-        msg = resp.message("Thank you for sharing your information. Here is a map with details"
-                     " including dangers around you and where to find help! Please refer to our app"
-                     " for any other information needed! -InstaRelief")
 
         for cities in db.child('Images').get().each():
-                print(cities.key())
-                print(msg_breakdown[1])
-                if msg_breakdown[1].lower() == (cities.key()).lower():
-                    for url in cities.val():
-                        if url == 'url':
-                            img = cities.val()['url']
-        print(img)
+            print(cities.key())
+            print(msg_breakdown[1])
+            key1 = (cities.key()).lower()
+            if msg_breakdown[1].lower() == key1:
+                for url in cities.val():
+                    if url == 'url':
+                        img = cities.val()['url']
+                        msg = resp.message("Thank you for sharing your information. Here is a map with details"
+                                           " including dangers around you and where to find help! Please refer to our app"
+                                           " for any other information needed! -InstaRelief")
+                        msg.media(img)
+                        return str(resp)
+        img = 'https://image.flaticon.com/icons/png/512/9/9188.png'
+        msg = resp.message("We are sorry, we cannot process your information at this time. Please try"
+                           " resubmitting without altering the output text. -InstaRelief")
         msg.media(img)
+        return str(resp)
     else:
         resp.message("We are sorry, we cannot process your information at this time. Please try"
                      " resubmitting without altering the output text. -InstaRelief")
