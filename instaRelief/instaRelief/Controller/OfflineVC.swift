@@ -24,6 +24,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     @IBOutlet weak var groupStack: UIStackView!
     @IBOutlet weak var connectOnlineBtn: UIButton!
     @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+    @IBOutlet weak var successImage: UIImageView!
     
     
     
@@ -99,7 +100,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                                     if let danger = dangerTxt.text {
                                         if let zip = zipTxt.text {
                                             let text = "\(streets)//\(city)//\(state)//\(zip)//\(country)//\(peopleInGroup)//\(danger)"
-                                            let messageComposeVC = messageComposer.configureTextMessage(text: text)
+                                            let messageComposeVC = messageComposer.configureTextMessage(text: text, offlineVC: self)
                                             present(messageComposeVC, animated: true, completion: nil)
                                         }
                                     }
@@ -136,14 +137,34 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
         zipTxt.text = ""
         peopleInGroup = 1
         groupSizeLbl.text = "People in group: \(peopleInGroup)"
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "SuccessVC")
-        controller.modalPresentationStyle = .overCurrentContext
-        self.present(controller, animated: true, completion: nil)
-        let when = DispatchTime.now() + 1
+        self.addressText.isHidden = true
+        self.cityTxt.isHidden = true
+        self.stateTxt.isHidden = true
+        self.countryTxt.isHidden = true
+        self.dangerTxt.isHidden = true
+        self.zipTxt.isHidden = true
+        self.groupStack.isHidden = true
+        self.successImage.alpha = 0.0
+        UIViewPropertyAnimator(duration: 0.7, curve: .easeOut, animations: {
+            self.successImage.isHidden = false
+            self.successImage.alpha = 1.0
+        }).startAnimation()
+        let when = DispatchTime.now() + 0.7
         DispatchQueue.main.asyncAfter(deadline: when) {
-            controller.dismiss(animated: true, completion: nil)
+            UIViewPropertyAnimator(duration: 0.7, curve: .easeOut, animations: {
+                self.successImage.alpha = 0.0
+            }).startAnimation()
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.7){
+                self.addressText.isHidden = false
+                self.cityTxt.isHidden = false
+                self.stateTxt.isHidden = false
+                self.countryTxt.isHidden = false
+                self.dangerTxt.isHidden = false
+                self.zipTxt.isHidden = false
+                self.groupStack.isHidden = false
+            }
         }
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

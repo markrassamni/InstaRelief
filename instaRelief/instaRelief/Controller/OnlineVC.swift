@@ -26,6 +26,7 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     @IBOutlet weak var requestButton: UIButton!
     @IBOutlet weak var dangerView: UIView!
     @IBOutlet weak var dangerPicker: UIPickerView!
+    @IBOutlet weak var successImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,15 +79,20 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
                         if error == nil {
                             self.ref.child("appUsers").child(uuid).child(dateChild).child("danger").setValue(danger) { (error, ref) -> Void in
                                 if error == nil {
-                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                    let controller = storyboard.instantiateViewController(withIdentifier: "SuccessVC")
-                                    controller.modalPresentationStyle = .overCurrentContext
-                                    self.present(controller, animated: true, completion: nil)
-                                    let when = DispatchTime.now() + 1
+                                    self.successImage.alpha = 0.0
+                                    UIViewPropertyAnimator(duration: 0.7, curve: .easeOut, animations: {
+                                        self.successImage.isHidden = false
+                                        self.successImage.alpha = 1.0
+                                    }).startAnimation()
+                                    let when = DispatchTime.now() + 0.7
                                     DispatchQueue.main.asyncAfter(deadline: when) {
-                                        controller.dismiss(animated: true, completion: nil)
-                                        self.reportButton.isHidden = false
-                                        self.requestButton.isHidden = false
+                                        UIViewPropertyAnimator(duration: 0.7, curve: .easeOut, animations: {
+                                            self.successImage.alpha = 0.0
+                                        }).startAnimation()
+                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.7){
+                                            self.reportButton.isHidden = false
+                                            self.requestButton.isHidden = false
+                                        }
                                     }
                                 }
                             }
@@ -94,7 +100,6 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
                     }
                 }
             }
-            
         }
         else {
             // TODO: alert error no location available, try again later
@@ -151,8 +156,6 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     @IBAction func smsPressed(_ sender: Any) {
         performSegue(withIdentifier: "OnlineToOffline", sender: nil)
     }
-    
-
 
     
 

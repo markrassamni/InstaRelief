@@ -28,17 +28,12 @@ class MessageComposer: NSObject, MFMessageComposeViewControllerDelegate {
         return messageComposeVC
     }
     
-    func configureTextMessage(text: String) -> MFMessageComposeViewController{
+    func configureTextMessage(text: String, offlineVC: OfflineVC) -> MFMessageComposeViewController{
         let messageComposeVC = MFMessageComposeViewController()
         messageComposeVC.messageComposeDelegate = self
         messageComposeVC.recipients = textMessageRecipients
         messageComposeVC.body = text
-        if let wd = UIApplication.shared.delegate?.window{
-            let vc = wd!.rootViewController
-            if vc is OfflineVC {
-                offlineVC = vc as? OfflineVC
-            }
-        }
+        self.offlineVC = offlineVC
         return messageComposeVC
     }
     
