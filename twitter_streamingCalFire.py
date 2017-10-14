@@ -37,10 +37,9 @@ class StdOutListener(StreamListener):
     api = None
 
     def __init__(self, user_twitter_id, keywords):
-        super(StdOutListener,self).__init__(None)
+        super(StdOutListener, self).__init__(None)
         self.text_file = open("CalFireFeed.txt", "w")
 
-        # self.set_up_stream()
         auth = OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
         self.stream = Stream(auth, self)
@@ -53,11 +52,6 @@ class StdOutListener(StreamListener):
         print("listening: ")
         self.stream.filter(follow=user_twitter_id, track=keywords)  # 876731042 is kelly
         self.text_file.close()
-
-    def set_up_stream(self):
-
-        self.screen = Form()
-        self.screen.show()
 
     def set_file(self, file):
         self.text_file = file
