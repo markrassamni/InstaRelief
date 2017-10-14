@@ -126,6 +126,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+        dangerView.isHidden = true
         super.touchesBegan(touches, with: event)
     }
     
