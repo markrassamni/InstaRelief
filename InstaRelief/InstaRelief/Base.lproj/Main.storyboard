@@ -96,6 +96,7 @@
                         <outlet property="dangerPicker" destination="ciV-3m-BFT" id="nno-64-yiW"/>
                         <outlet property="dangerTxt" destination="0T6-vY-1Qj" id="Cev-SQ-M1u"/>
                         <outlet property="dangerView" destination="tqc-pf-L5N" id="k7a-mm-miW"/>
+                        <outlet property="stateTxt" destination="oke-Bj-UNc" id="XnN-MZ-N7k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

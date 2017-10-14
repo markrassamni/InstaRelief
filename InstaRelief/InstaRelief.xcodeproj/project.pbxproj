@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F91292601F91B54800A0EEB5 /* MessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F912925F1F91B54800A0EEB5 /* MessageComposer.swift */; };
 		F96270741F91AF350043588F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96270731F91AF350043588F /* AppDelegate.swift */; };
 		F96270761F91AF350043588F /* OfflineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96270751F91AF350043588F /* OfflineVC.swift */; };
 		F96270791F91AF350043588F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F96270771F91AF350043588F /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F912925F1F91B54800A0EEB5 /* MessageComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposer.swift; sourceTree = "<group>"; };
 		F96270701F91AF350043588F /* instaRelief.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = instaRelief.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F96270731F91AF350043588F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F96270751F91AF350043588F /* OfflineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineVC.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				F96270731F91AF350043588F /* AppDelegate.swift */,
 				F96270751F91AF350043588F /* OfflineVC.swift */,
+				F912925F1F91B54800A0EEB5 /* MessageComposer.swift */,
 				F96270771F91AF350043588F /* Main.storyboard */,
 				F962707A1F91AF350043588F /* Assets.xcassets */,
 				F962707C1F91AF350043588F /* LaunchScreen.storyboard */,
@@ -136,6 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F91292601F91B54800A0EEB5 /* MessageComposer.swift in Sources */,
 				F96270761F91AF350043588F /* OfflineVC.swift in Sources */,
 				F96270741F91AF350043588F /* AppDelegate.swift in Sources */,
 			);
@@ -277,6 +281,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VBN5K8MF76;
 				INFOPLIST_FILE = instaRelief/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.markrassamni.instaRelief;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -292,6 +297,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VBN5K8MF76;
 				INFOPLIST_FILE = instaRelief/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.markrassamni.instaRelief;
 				PRODUCT_NAME = "$(TARGET_NAME)";
