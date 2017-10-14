@@ -7,6 +7,9 @@ import numpy as np
 import cv2
 import googlemaps
 from math import log, exp, tan, atan, pi, ceil
+import googleMapsSearch
+import pyrebase
+
 
 EARTH_RADIUS = 6378137
 EQUATOR_CIRCUMFERENCE = 2 * pi * EARTH_RADIUS
@@ -22,6 +25,15 @@ def latlon_to_pixels(lat, lon, zoom):
     py = (my + ORIGIN_SHIFT) / res
     return px, py
 
+config = {
+  "apiKey": "AIzaSyAFjbldaX_ZJw_yOLahlYJNFtlBbxP8hTg",
+  "authDomain": "ngcode-9f40c.firebaseapp.com",
+  "databaseURL": "https://ngcode-9f40c.firebaseio.com",
+  "storageBucket": "ngcode-9f40c.appspot.com"
+}
+
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
 
 class Mapper(object):
     """
@@ -49,14 +61,25 @@ class Mapper(object):
             self.all_lat.append(self.lat)
             self.all_lng.append(self.lng)
 
+
+    def get_user_data(self):
+        all_users = db.child("appUsers").get()
+        for user in all_users.each():
+            val = user.val()
+            for key in val:
+                lat = user[key]['latitude']
+                print (lat)
+
     def download_image(self, types):
+        self.get_user_data()
         markers_list = []
         for i in range(len(self.all_lng)):
             lng = self.all_lng[i]
             lat = self.all_lat[i]
             type = types[i]
-            marker = '&markers=color:'+self.color_type[type]+'%7Clabel:S%7C' + str(lat) + ',' + str(lng)
+            marker = '&markers=icon:https://i.imgur.com/VdRg39X.png'+'%7Clabel:S%7C' + str(lat) + ',' + str(lng)
             markers_list.append(marker)
+
 
         urlparams = 'center='+str(self.lat)+','+str(self.lng)+'&size='+str(self.width)+'x'+str(self.height)+'&sensor=false'+'&maptype=hybrid'
         url = 'http://maps.googleapis.com/maps/api/staticmap?' + urlparams
