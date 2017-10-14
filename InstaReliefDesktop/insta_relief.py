@@ -33,6 +33,7 @@ def main():
     mapping_window.show()
     mapping_window.setWindowTitle('Insta-Relief')
     QtWidgets.QApplication.instance().exec_()
+    #
 
 main()
 

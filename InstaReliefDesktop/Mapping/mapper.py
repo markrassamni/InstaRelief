@@ -58,6 +58,7 @@ class Mapper(object):
                              'Flood': 'https://i.imgur.com/9N9Glen.png'}
 
         self.icons = []
+        #
         self.city = None
 
     def geocode(self, addresses, cities):
