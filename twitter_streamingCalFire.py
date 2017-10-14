@@ -6,8 +6,6 @@ import time
 import json
 import pyrebase
 
-
-# test
 # User Credentials
 access_token = "919017548452003840-OoV9muwD1Ct4Vb7xpbv80WhGQKDzWUJ"
 access_token_secret = "fmehS5sHuV9neS6E3CwfznHMI27NNbxbQSfYGibwiQW2t"
