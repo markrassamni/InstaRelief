@@ -54,9 +54,15 @@ def sms_reply():
     if msg_size == 7: # Check if user altered the message
         data = {"address":  msg_breakdown[0], "city": msg_breakdown[1], "state": msg_breakdown[2], "zip": msg_breakdown[3], "country":  msg_breakdown[4], "numPeople":  msg_breakdown[5], "disaster":  msg_breakdown[6]}
         db.child("texts").child(number).push(data)
-        resp.message("Thank you for sharing your information. Here is a map with details"
+        msg = resp.message("Thank you for sharing your information. Here is a map with details"
                      " including dangers around you and where to find help! Please refer to our app"
                      " for any other information needed! -InstaRelief")
+
+        for cities in db.child('Images').get().each():
+                for url in cities.val():
+                    if url == 'url':
+                        img = cities.val()['url']
+        msg.media(img)
     else:
         resp.message("We are sorry, we cannot process your information at this time. Please try"
                      " resubmitting without altering the output text. -InstaRelief")
