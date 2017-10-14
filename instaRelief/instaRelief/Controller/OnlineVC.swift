@@ -47,6 +47,7 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // save current location coordinates and city
         currentLocation = locations.last! as CLLocation
         let geoCoder = CLGeocoder()
         geoCoder.reverseGeocodeLocation(self.currentLocation!) { placemarks, error in
@@ -73,6 +74,7 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     }
     
     func reportDanger(danger: String){
+        // user reports danger in his location
         if let location = currentLocation, let city = currentCity {
             let uuid = UIDevice.current.identifierForVendor!.uuidString
             let date = Date()
@@ -83,6 +85,7 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
             let minutes = calendar.component(.minute, from: date)
             let seconds = calendar.component(.second, from: date)
             let dateChild = "\(month) \(day) \(hour):\(minutes):\(seconds)"
+            // fill all child objects in database
             self.ref.child("appUsers").child(uuid).child(dateChild).child("city").setValue(city) { (error, ref) -> Void in
                 if error == nil {
                     self.ref.child("appUsers").child(uuid).child(dateChild).child("latitude").setValue(location.coordinate.latitude) { (error, ref) -> Void in
@@ -128,20 +131,20 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
     }
     
     func requestReport(){
+        // request danger information in current city
         if let city = currentCity {
             let cityRef = ref.child("Images")
             cityRef.observeSingleEvent(of: .value, with: { snapshot in
                 let enumerator = snapshot.children
                 var foundCity = false
                 while let rest = enumerator.nextObject() as? DataSnapshot {
-//                    print("\(rest.key), \(city)")
                     if rest.key == city{
                         foundCity = true
                         let urlRef = cityRef.child(rest.key)
                         urlRef.observeSingleEvent(of: .value, with: { snapshot in
                             let urlEnum = snapshot.children
                             while let restURL = urlEnum.nextObject() as? DataSnapshot {
-                                print(restURL.key)
+                                // get image and time image was posted
                                 if restURL.key == "url" {
                                     if let url = restURL.value as? String{
                                         if let urlAsString = URL(string: url){

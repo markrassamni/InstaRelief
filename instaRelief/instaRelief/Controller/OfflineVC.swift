@@ -92,7 +92,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     @IBAction func sendPressed(_ sender: Any) {
          //Make sure the device can send text messages
                 if (messageComposer.canSendText()) {
-                    // Obtain a configured MFMessageComposeViewController
+                    // Format text to how our server reads it
                     if let streets = addressText.text {
                         if let city = cityTxt.text {
                             if let state = stateTxt.text {
@@ -134,6 +134,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     
     
     func sentSuccessfully(){
+        // Clear/hide fields, display success image, bring back fields
         addressText.text = ""
         cityTxt.text = ""
         stateTxt.text = ""
@@ -178,6 +179,7 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     }
     
     @IBAction func connectOnlinePressed(_ sender: Any) {
+        // Try to establish a data connection
         connectOnlineBtn.isHidden = true
         activitySpinner.isHidden = false
         activitySpinner.startAnimating()
