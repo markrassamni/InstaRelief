@@ -155,11 +155,36 @@ class OnlineVC: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegat
 //            getDataFromUrl(url: url, completion: { (data: Data?, response: URLResponse?, error: Error?) in
 //
 //            })
+            let cityRef = ref.child("Images")
+            cityRef.observeSingleEvent(of: .value, with: { snapshot in
+                print(snapshot.childrenCount) // I got the expected number of items
+                let enumerator = snapshot.children
+                while let rest = enumerator.nextObject() as? DataSnapshot {
+                    if rest.key == city{
+                        let urlRef = cityRef.child(rest.key)
+                        urlRef.observeSingleEvent(of: .value, with: { snapshot in
+                            print(snapshot.childrenCount)
+                            let urlEnum = snapshot.children
+                            while let restURL = urlEnum.nextObject() as? DataSnapshot {
+                                if restURL.key == "url" {
+                                    if let url = restURL.value as? String{
+                                        if let urlAsString = URL(string: url){
+                                            self.downloadImage(url: urlAsString)
+                                        }
+                                    }
+                                }
+                            }
+                        })
+                    }
+//                    print(rest.key)
+//                    print(rest.value)
+                }
+            })
             
-            if let url = URL(string: "http://www.apple.com/euro/ios/ios8/a/generic/images/og.png") {
-//                imageView.contentMode = .scaleAspectFit
-                downloadImage(url: url)
-            }
+//            if let url = URL(string: "http://www.apple.com/euro/ios/ios8/a/generic/images/og.png") {
+////                imageView.contentMode = .scaleAspectFit
+//                downloadImage(url: url)
+//            }
             
         } else {
             let errorAlert = UIAlertController(title: "Current Location Unavailable", message: "Your device is not able to send your current location. Try again later.", preferredStyle: .alert)
