@@ -11,7 +11,7 @@ import UIKit
 class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     
-    @IBOutlet weak var crossStreetsTxt: UITextField!
+    @IBOutlet weak var addressText: UITextField!
     @IBOutlet weak var cityTxt: UITextField!
     @IBOutlet weak var stateTxt: UITextField!
     @IBOutlet weak var countryTxt: UITextField!
@@ -19,10 +19,17 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     @IBOutlet weak var dangerView: UIView!
     @IBOutlet weak var dangerPicker: UIPickerView!
     @IBOutlet weak var messageSentImageView: UIImageView!
+    @IBOutlet weak var zipTxt: UITextField!
+    @IBOutlet weak var groupSizeLbl: UILabel!
+    @IBOutlet weak var groupStepper: UIStepper!
+    @IBOutlet weak var groupStack: UIStackView!
     
     
-    var pickerDataSource = ["Fire", "Flood", "Zombie", "Hurricane", "Tornado"];
-    let messageComposer = MessageComposer()
+    fileprivate var peopleInGroup = 1
+    
+    
+    fileprivate var pickerDataSource = ["Fire", "Flood", "Zombie", "Hurricane", "Tornado"];
+    fileprivate let messageComposer = MessageComposer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,13 +41,15 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
         cityTxt.delegate = self
         stateTxt.delegate = self
         countryTxt.delegate = self
-        crossStreetsTxt.delegate = self
+        addressText.delegate = self
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == dangerTxt {
             dangerTxt.isHidden = true
             dangerView.isHidden = false
+            groupStack.isHidden = true
+            view.endEditing(true)
             return false
         }
         return true
@@ -60,10 +69,15 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        dangerView.isHidden = true
-        dangerTxt.isHidden = false
         dangerTxt.text = "\(pickerDataSource[row])"
     }
+    
+    @IBAction func selectPickerItem(_ sender: Any) {
+        dangerView.isHidden = true
+        dangerTxt.isHidden = false
+        groupStack.isHidden = false
+    }
+    
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return "\(pickerDataSource[row])"
@@ -73,14 +87,17 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
          //Make sure the device can send text messages
                 if (messageComposer.canSendText()) {
                     // Obtain a configured MFMessageComposeViewController
-                    if let streets = crossStreetsTxt.text {
+                    if let streets = addressText.text {
                         if let city = cityTxt.text {
                             if let state = stateTxt.text {
                                 if let country = countryTxt.text {
                                     if let danger = dangerTxt.text {
-                                        let text = "\(streets)//\(city)//\(state)//\(country)//\(danger)"
-                                        let messageComposeVC = messageComposer.configureTextMessage(text: text)
-                                        present(messageComposeVC, animated: true, completion: nil)
+                                        if let zip = zipTxt.text {
+                                            let text = "\(streets)//\(city)//\(state)//\(zip)//\(country)//\(peopleInGroup)//\(danger)"
+                                            let messageComposeVC = messageComposer.configureTextMessage(text: text)
+                                            messageSentImageView.isHidden = false
+                                            present(messageComposeVC, animated: true, completion: nil)
+                                        }
                                     }
                                 }
                             }
@@ -93,11 +110,26 @@ class OfflineVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UI
                 }
     }
     
+    @IBAction func stepperValueChanged(_ sender: UIStepper) {
+        peopleInGroup = Int(sender.value)
+        groupSizeLbl.text = "People in group: \(peopleInGroup)"
+//        view.endEditing(true)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+    }
+    
+    
+    
+    
     func sentSuccessfully(){
         print("CAlled")
-        UIViewPropertyAnimator(duration: 0.5, curve: .easeOut, animations: {
-            self.messageSentImageView.alpha = 1.0
-        }).startAnimation()
+        // called when hitting cancel
+//        UIViewPropertyAnimator(duration: 1.0, curve: .easeIn, animations: {
+//            self.messageSentImageView.alpha = 0.0
+//        }).startAnimation()
         
 //        let when = DispatchTime.now() + 0.5
 //        DispatchQueue.main.asyncAfter(deadline: when) {

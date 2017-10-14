@@ -34,9 +34,6 @@ class MessageComposer: NSObject, MFMessageComposeViewControllerDelegate {
         messageComposeVC.messageComposeDelegate = self
         messageComposeVC.recipients = textMessageRecipients
         messageComposeVC.body = text
-//        if let offlineVC = AppDelegate.application(self window.rootViewController as OfflineVC {
-//
-//        }
         if let wd = UIApplication.shared.delegate?.window{
             let vc = wd!.rootViewController
             if vc is OfflineVC {
