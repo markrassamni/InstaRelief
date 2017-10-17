@@ -1,5 +1,5 @@
 # InstaRelief
-Our teams winning soultion for Northrup Grumman Space Park 2017 Code-A-Thon Challenge
+Our teams winning soultion for Northrop Grumman Space Park 2017 Code-A-Thon Challenge
 ![App Interface](https://i.gyazo.com/1fba33558b55df5b4ba8ca9bbe21cb4c.png)
 # Team Members:
 Kelly Broton, Ryan Morris, Garrett Stribling, and Mark Rassamni
